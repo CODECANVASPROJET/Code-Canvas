@@ -238,7 +238,7 @@ img {
 
 /* ADAPTATION AU FORMAT TÉLÉPHONE */
 
-@media (max-width: 768px) { 
+@media (max-width: 768px) and (pointer: coarse) { 
     html, body, .screen {
         padding: 0;
         margin: 0;
@@ -272,12 +272,12 @@ img {
     #btnConsole,
     #btnDownload {
         position: absolute;
-        top: 10%;
+        top: 5%;
         transform: translateY(-50%);
         height: 4.8vh;
         min-height: 38px;
-        width: 17vw;
-        min-width: 100px;
+        width: 14vw;
+        min-width: 80px;
         max-width: 140px;
         padding: 0;
         border: none;
@@ -296,12 +296,12 @@ img {
     }
 
     #btnConsole {
-        left: 5vw;
+        left: 3vw;
         background: #e94a34;
     }
 
     #btnDownload {
-        left: 37vw;
+        left: 34vw;
         background: #00a5a5;
     }
 
@@ -321,7 +321,6 @@ img {
     .bloc {
         position: absolute;
         width: 92vw;
-        left: 2vw;
         user-select: none;
     }
 
@@ -329,18 +328,21 @@ img {
     .bloc:nth-child(1) {
         top: 11vh;
         height: 15vh;
+        left: 4vw;
     }
 
     /* CSS */
     .bloc:nth-child(2) {
         top: 27.5vh;
         height: 15vh;
+        left: 4vw;
     }
 
     /* JS */
     .bloc:nth-child(3) {
         top: 44vh;
         height: 15vh;
+        left: 4vw;
     }
 
     /* Rendu */
