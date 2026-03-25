@@ -236,164 +236,220 @@ img {
     box-shadow: 0 3px 8px rgba(0,0,0,0.2);
 }
 
-@media (max-width: 768px) {
-    html, body, .screen{ /* impact le div "screen" dans le body du html */      
-        padding: 0%; /* enlève tout espace interne par défaut */
-        margin: 0%; /* enlève les marges par défaut du navigateur */
-        height: 100%; /* permet de prendre toute la hauteur disponible */
-        overflow: hidden; /* empêche l’apparition de scroll */
+/* ADAPTATION AU FORMAT TÉLÉPHONE */
+
+@media (max-width: 768px) { 
+    html, body, .screen {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
     }
 
     .screen {
-        display: grid; /* active le système de grille (pas utilisé ici car tout est en absolute) */
-        width: 100vw; /* largeur égale à la largeur de la fenêtre */
-        height: 100vh; /* hauteur égale à la hauteur de la fenêtre */
-        position: relative; /* sert de référence pour les éléments en absolute */
-        width: 100vw; /* redéfinit la largeur (doublon inutile mais sans impact) */
-        height: 100vh; /* redéfinit la hauteur (doublon inutile mais sans impact) */
-        border: 0px solid black; /* bordure invisible (inutile ici) */
-        box-sizing: border-box; /* inclut les bordures dans les dimensions */
-        background-color: #2f2f2f; /* couleur de fond du conteneur */
+        position: relative;
+        width: 100vw;
+        height: 100dvh;
+        box-sizing: border-box;
+        background-color: #2f2f2f;
     }
 
-    .separationMenu { /* barre de séparation pour le menu */
-        z-index: 3; /* place au-dessus des autres éléments */
-        position: absolute; /* position libre dans .screen */
-        height: 100vh; /* prend toute la hauteur de l’écran */
-        left: 7vw; /* position horizontale proportionnelle à l’écran */
-        border: 1px solid black; /* dessine le trait vertical */
+    /* Barre du menu en haut */
+    .separationMenu {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 9vh;
+        background-color: #1f1f1f;
+        border: none;
+        border-bottom: 1px solid black;
+        z-index: 20;
     }
 
+    /* Boutons dans la barre du haut */
+    #btnConsole,
+    #btnDownload {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 5.5vh;
+        min-height: 38px;
+        width: 26vw;
+        min-width: 100px;
+        max-width: 140px;
+        padding: 0;
+        border: none;
+        border-radius: 10px;
+        color: white;
+        font-size: clamp(12px, 3.2vw, 14px);
+        font-weight: bold;
+        font-family: "Fira Sans", sans-serif;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+        transition: all 0.25s ease;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 30;
+    }
+
+    #btnConsole {
+        left: 6vw;
+        background: #e94a34;
+    }
+
+    #btnDownload {
+        left: 38vw;
+        background: #00a5a5;
+    }
+
+    #btnConsole:hover,
+    #btnDownload:hover {
+        transform: translateY(-50%) scale(1.03);
+        box-shadow: 0 8px 18px rgba(0,0,0,0.3);
+    }
+
+    #btnConsole:active,
+    #btnDownload:active {
+        transform: translateY(-50%) scale(0.96);
+        box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+    }
+
+    /* Blocs */
     .bloc {
-        position: absolute; /* permet de déplacer librement les fenêtres */
-        width: 49vw; /* largeur proportionnelle à l’écran */
-        height: 30vh; /* hauteur proportionnelle à l’écran */
-    }
-
-    .bloc iframe{
-        z-index: 1; /* place sous la barre */
-        width: 100%; /* prend toute la largeur du bloc */
-        height: calc(100% - 4.5vh); /* enlève la hauteur de la barre (30px) */
-        border: 0.2vw solid rgb(252, 0, 0); /* contour de l’iframe */
-        border-top:  0px;
-        border-bottom-left-radius: 10px; /* arrondi coin bas gauche */
-        border-bottom-right-radius: 10px; /* arrondi coin bas droit */
-        box-sizing: border-box; /* inclut bordure dans la taille */
-        display: block; /* évite les espaces inline */
-    }
-
-    .bar{
-        position: relative; /* sert de référence pour le texte */
-        z-index: 2; /* au-dessus de l’iframe */
-        width: 100%; /* prend toute la largeur du bloc */
-        height: 4.5vh; /* hauteur fixe de la barre */
-        background-color: #000000; /* fond noir */
-        border-top-left-radius: 10px; /* arrondi coin haut gauche */
-        border-top-right-radius: 10px; /* arrondi coin haut droit */
-        cursor: pointer; /* curseur main pour indiquer le drag */
-        box-sizing: border-box; /* inclut bordures dans la taille */
-        border: 0.2vw solid black;
-    }
-
-    .bloc {
-        user-select: none; /* empêche la sélection de texte */
-    }
-
-    img {
-        -webkit-user-drag: none; /* Safari / Chrome */
+        position: absolute;
+        width: 92vw;
+        left: 4vw;
         user-select: none;
     }
 
-    .bloc:nth-child(1) .bar{
+    /* HTML */
+    .bloc:nth-child(1) {
+        top: 11vh;
+        height: 15vh;
+    }
+
+    /* CSS */
+    .bloc:nth-child(2) {
+        top: 27.5vh;
+        height: 15vh;
+    }
+
+    /* JS */
+    .bloc:nth-child(3) {
+        top: 44vh;
+        height: 15vh;
+    }
+
+    /* Rendu */
+    .bloc:nth-child(4) {
+        top: 60.5vh;
+        height: 33vh;
+        width: 92vw;
+        left: 4vw;
+    }
+
+    .bloc iframe {
+        z-index: 1;
+        width: 100%;
+        height: calc(100% - 5vh);
+        border: 1px solid black;
+        border-top: 0;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        box-sizing: border-box;
+        display: block;
+    }
+
+    .bar {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        height: 5vh;
+        min-height: 34px;
+        background-color: #000000;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        cursor: default;
+        box-sizing: border-box;
+        border: 1px solid black;
+    }
+
+    .bloc:nth-child(1) .bar {
         background-color: #e94a34;
     }
 
-    .bloc:nth-child(2) .bar{
+    .bloc:nth-child(2) .bar {
         background-color: #00a5a5;
     }
 
-    .bloc:nth-child(3) .bar{
+    .bloc:nth-child(3) .bar {
         background-color: #fec800;
     }
 
-    .bloc:nth-child(4) iframe{
+    .bloc:nth-child(4) iframe {
         background-color: white;
     }
 
-    .bloc:nth-child(1) { /* HTML */
-        top: 3vh; /* position verticale */
-        left: 8vw; /* position horizontale */
+    .texte {
+        position: absolute;
+        z-index: 3;
+        color: rgb(255, 255, 255);
+        font-family: "Fira Sans", sans-serif;
+        font-weight: bold;
+        font-size: clamp(12px, 3.6vw, 15px);
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        white-space: nowrap;
     }
 
-    .bloc:nth-child(2) { /* CSS */
-        top: 35vh; /* position verticale */
-        left: 8vw; /* position horizontale */
-    }
-
-    .bloc:nth-child(3) { /* JS */
-        top: 67vh; /* position verticale */
-        left: 8vw; /* position horizontale */
-    }
-
-    .bloc:nth-child(4) { /* Rendu */
-        top: 3vh; /* position verticale */
-        left: 58vw; /* position horizontale */
-        width: 41vw; /* largeur spécifique */
-        height: 93.9vh; /* hauteur presque pleine */
-    }
-
-
-
-
-    .texte { /* titre des fenêtres (HTML, CSS, JS) */
-        position: absolute; /* position libre dans la barre */
-        z-index: 3; /* au-dessus de tout */
-        color: rgb(255, 255, 255); /* texte blanc */
-        font-family: "Fira Sans", sans-serif; /* police utilisée */
-        font-weight: bold; /* texte en gras */
-        font-size: 1.2vw;
-        left: 50%; /* centre horizontalement */
-        transform: translate(-50%, -50%); /* ajuste le centrage parfait */
-        top: 55%; /* centre vertical approximatif dans la barre */
+    .corner,
+    .cornerRender {
+        position: absolute;
+        right: 8px;
+        bottom: 6px;
+        font-size: clamp(14px, 4vw, 18px);
+        cursor: default;
+        z-index: 3;
+        user-select: none;
+        transform: scaleX(-1);
+        opacity: 0.7;
+        pointer-events: none;
     }
 
     .corner {
-        position: absolute;
-        right: 5px;
-        bottom: 5px;
-        font-size: 1vw; /* taille de l’icône */
-        color: rgb(255, 255, 255); /* couleur */
-        cursor: nwse-resize;
-        z-index: 3;
-        user-select: none; /* empêche sélection texte */
-        transform: scaleX(-1);
+        color: rgb(255, 255, 255);
     }
 
     .cornerRender {
-        position: absolute;
-        right: 5px;
-        bottom: 5px;
-        font-size: 1vw; /* taille de l’icône */
-        color: rgb(0, 0, 0); /* couleur */
-        cursor: nwse-resize;
-        z-index: 3;
-        user-select: none; /* empêche sélection texte */
-        transform: scaleX(-1);
+        color: rgb(0, 0, 0);
+    }
+
+    img {
+        -webkit-user-drag: none;
+        user-select: none;
     }
 
     #consoleOutput {
         position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 25vh;
+        left: 4vw;
+        bottom: 2vh;
+        width: 92vw;
+        height: 22vh;
         background: #111;
         color: #ddd;
         font-family: monospace;
+        font-size: clamp(11px, 3vw, 13px);
         padding: 10px;
         overflow-y: auto;
         display: none;
-        z-index: 10;
+        z-index: 100;
+        box-sizing: border-box;
+        border-radius: 10px;
+        border: 1px solid #333;
     }
 
     .console-log {
@@ -407,73 +463,5 @@ img {
     .console-error {
         color: red;
     }
-
-    #btnConsole {
-        position: absolute;
-        top: 2vh;
-        left: 0.5vw;
-        z-index: 9999;
-        width: 6vw;
-        padding: 0.7vw;
-        border: none;
-        border-radius: 12px;
-        background: linear-gradient(135deg, #e94a34, #e94a34);
-        color: white;
-        font-size: 0.9vw;
-        font-weight: bold;
-        font-family: "Fira Sans", sans-serif;
-        cursor: pointer;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        transition: all 0.25s ease;
-        z-index: 1000000;
-        display: flex;
-        justify-content: center;
-
-    }
-
-    #btnDownload {
-        position: absolute;
-        top: 9vh;
-        left: 0.5vw;
-        z-index: 9999;
-        width: 6vw;
-        padding: 0.7vw;
-        border: none;
-        border-radius: 12px;
-        background: linear-gradient(135deg, #00a5a5, #00a5a5);
-        color: white;
-        font-size: 0.9vw;
-        font-weight: bold;
-        font-family: "Fira Sans", sans-serif;
-        cursor: pointer;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        transition: all 0.25s ease;
-        z-index: 9999;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-
-    #btnConsole:hover {
-        transform: translateY(-2px) scale(1.03);
-        box-shadow: 0 8px 18px rgba(0,0,0,0.3);
-    }
-
-    #btnConsole:active {
-        transform: scale(0.95);
-        box-shadow: 0 3px 8px rgba(0,0,0,0.2);
-    }
-
-    #btnDownload:hover {
-        transform: translateY(-2px) scale(1.03);
-        box-shadow: 0 8px 18px rgba(0,0,0,0.3);
-    }
-
-    #btnDownload:active {
-        transform: scale(0.95);
-        box-shadow: 0 3px 8px rgba(0,0,0,0.2);
-    }
-
-    }
+}
 

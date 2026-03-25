@@ -93,9 +93,7 @@ function resizeWindow(e){ // déclenché au clic sur un coin
     document.addEventListener("mouseup", mouseup); // écoute la fin du resize
 }
 
-// ==========================
 // GESTION DE LA CONSOLE PERSO
-// ==========================
 
 function clearConsole(){ // vide complètement la console visuelle
     consoleOutput.innerHTML = "";
@@ -122,9 +120,7 @@ window.addEventListener("message", (event) => { // écoute les messages envoyés
     }
 });
 
-// ==============
 // CODE DE RENDU
-// ==============
 
 function updatePreview() { // met à jour le rendu de l'iframe
     const html = localStorage.getItem("code_html") || ""; // récupère le HTML sauvegardé
