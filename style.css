@@ -272,18 +272,18 @@ img {
     #btnConsole,
     #btnDownload {
         position: absolute;
-        top: 50%;
+        top: 2%;
         transform: translateY(-50%);
-        height: 5.5vh;
+        height: 5.3vh;
         min-height: 38px;
-        width: 26vw;
+        width: 20vw;
         min-width: 100px;
         max-width: 140px;
         padding: 0;
         border: none;
         border-radius: 10px;
         color: white;
-        font-size: clamp(12px, 3.2vw, 14px);
+        font-size: clamp(10px, 3vw, 12px);
         font-weight: bold;
         font-family: "Fira Sans", sans-serif;
         cursor: pointer;
@@ -296,12 +296,12 @@ img {
     }
 
     #btnConsole {
-        left: 6vw;
+        left: 5vw;
         background: #e94a34;
     }
 
     #btnDownload {
-        left: 38vw;
+        left: 37vw;
         background: #00a5a5;
     }
 
@@ -321,7 +321,7 @@ img {
     .bloc {
         position: absolute;
         width: 92vw;
-        left: 4vw;
+        left: 2vw;
         user-select: none;
     }
 
