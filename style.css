@@ -272,11 +272,11 @@ img {
     #btnConsole,
     #btnDownload {
         position: absolute;
-        top: 2%;
+        top: 10%;
         transform: translateY(-50%);
-        height: 5.3vh;
+        height: 4.8vh;
         min-height: 38px;
-        width: 20vw;
+        width: 17vw;
         min-width: 100px;
         max-width: 140px;
         padding: 0;
