@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=open_in_full" />
+    <link rel="stylesheet" href="style.css" /> 
+    <title>Code Canvas</title>
+</head>
+<body>
+    <div class="separationMenu"></div>
+    <div class="screen"></div>
+    <div class="container">
+        <div class="bloc">
+            <span class="corner material-symbols-outlined">open_in_full</span>
+            <div class="bar">
+                <div class="texte">
+                    <p>HTML</p>
+                </div>
+            </div>
+            <iframe
+                id="windowHtml"
+                src="./iframes/html/windowH.html" 
+                >
+            </iframe>
+        </div>
+        
+        <div class="bloc">
+            <span class="corner material-symbols-outlined">open_in_full</span>
+            <div class="bar">
+                <div class="texte">
+                    <p>CSS</p>
+                </div>
+            </div>
+            <iframe
+                id="windowCss"
+                src="./iframes/css/windowC.html"
+                >
+            </iframe>
+        </div>
+
+        <div class="bloc">
+            <span class="corner material-symbols-outlined">open_in_full</span>
+            <div class="bar">
+                <div class="texte">
+                    <p>JS</p>
+                </div>
+            </div>
+            <iframe
+                id="windowJs"
+                src="./iframes/js/windowJ.html"
+                >
+            </iframe>
+        </div>
+
+        <div class="bloc">
+            <span class="cornerRender material-symbols-outlined">open_in_full</span>
+            <div class="bar">
+                <div class="texte">
+                    <p>Rendu</p>
+                </div>
+            </div>
+            <iframe
+                id="windowRender"
+                sandbox="allow-scripts">
+            </iframe>
+        </div>
+    </div>
+    
+    <div id="consoleOutput"></div>
+    <button id="btnConsole" onclick="toggleConsole()">CONSOLE</button>
+    
+    <button id="btnDownload" onclick="downloadHtmlFile()">EXPORTER</button>
+    
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.4/dist/purify.min.js"></script>
+</body>
+</html>
