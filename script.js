@@ -241,3 +241,44 @@ function downloadHtmlFile(){ // télécharge un fichier html complet avec le cod
 
     URL.revokeObjectURL(url); // libère l'URL temporaire
 }
+
+// FONCTION DU BOUTON MODELE
+
+function modelView() {
+    if (document.getElementById("templatesOverlay")) return;
+    
+    
+    const overlay = document.createElement("div"); // créer overlay
+    overlay.id = "templatesOverlay";
+
+    // contenu fenêtre
+    overlay.innerHTML = `
+        <div id="templatesModal">
+            <h2>Choisir un modèle</h2>
+
+            <div id="templatesList">
+                <!-- tes futurs modèles ici -->
+            </div>
+
+            <button onclick="closeTemplatesWindow()">Fermer</button>
+        </div>
+    `;
+
+    document.body.appendChild(overlay);
+}
+
+function closeTemplatesWindow() {
+    const overlay = document.getElementById("templatesOverlay");
+    if (overlay) overlay.remove();
+}
+
+
+document.addEventListener("DOMContentLoaded", () => { // liaison bouton
+    const btn = document.getElementById("btnModel");
+
+    if (btn) {
+        btn.addEventListener("click", modelView);
+    } else {
+        console.log("btnModel introuvable");
+    }
+});

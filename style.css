@@ -6,7 +6,6 @@ html, body, .screen{ /* impact le div "screen" dans le body du html */
 }
 
 .screen {
-    display: grid; /* active le système de grille (pas utilisé ici car tout est en absolute) */
     width: 100vw; /* largeur égale à la largeur de la fenêtre */
     height: 100vh; /* hauteur égale à la hauteur de la fenêtre */
     position: relative; /* sert de référence pour les éléments en absolute */
@@ -17,12 +16,16 @@ html, body, .screen{ /* impact le div "screen" dans le body du html */
     background-color: #2f2f2f; /* couleur de fond du conteneur */
 }
 
+.container {
+    display: grid; /* active le système de grille (pas utilisé ici car tout est en absolute) */
+}
+
 .separationMenu { /* barre de séparation pour le menu */
     z-index: 3; /* place au-dessus des autres éléments */
     position: absolute; /* position libre dans .screen */
     height: 100vh; /* prend toute la hauteur de l’écran */
-    left: 7vw; /* position horizontale proportionnelle à l’écran */
-    border: 1px solid black; /* dessine le trait vertical */
+    width: 7vw;
+    background-color: #222020;
 }
 
 .bloc {
@@ -34,8 +37,8 @@ html, body, .screen{ /* impact le div "screen" dans le body du html */
 .bloc iframe{
     z-index: 1; /* place sous la barre */
     width: 100%; /* prend toute la largeur du bloc */
-    height: calc(100% - 4.5vh); /* enlève la hauteur de la barre (30px) */
-    border: 0.2vw solid black; /* contour de l’iframe */
+    height: calc(100% - 3vh); /* enlève la hauteur de la barre (30px) */
+    border: 0.1vw solid black; /* contour de l’iframe */
     border-top:  0px;
     border-bottom-left-radius: 10px; /* arrondi coin bas gauche */
     border-bottom-right-radius: 10px; /* arrondi coin bas droit */
@@ -47,13 +50,13 @@ html, body, .screen{ /* impact le div "screen" dans le body du html */
     position: relative; /* sert de référence pour le texte */
     z-index: 2; /* au-dessus de l’iframe */
     width: 100%; /* prend toute la largeur du bloc */
-    height: 4.5vh; /* hauteur fixe de la barre */
+    height: 3vh; /* hauteur fixe de la barre */
     background-color: #000000; /* fond noir */
     border-top-left-radius: 10px; /* arrondi coin haut gauche */
     border-top-right-radius: 10px; /* arrondi coin haut droit */
     cursor: pointer; /* curseur main pour indiquer le drag */
     box-sizing: border-box; /* inclut bordures dans la taille */
-    border: 0.2vw solid black;
+    border: 0.1vw solid black;
 }
 
 .bloc {
@@ -63,6 +66,14 @@ html, body, .screen{ /* impact le div "screen" dans le body du html */
 img {
     -webkit-user-drag: none; /* Safari / Chrome */
     user-select: none;
+}
+
+.images img {
+    position: absolute;
+    top: 2vh;
+    left: 1.2vw;
+    height: 10vh;
+    z-index: 11111;
 }
 
 .bloc:nth-child(1) .bar{
@@ -103,16 +114,13 @@ img {
     height: 93.9vh; /* hauteur presque pleine */
 }
 
-
-
-
 .texte { /* titre des fenêtres (HTML, CSS, JS) */
     position: absolute; /* position libre dans la barre */
     z-index: 3; /* au-dessus de tout */
     color: rgb(255, 255, 255); /* texte blanc */
     font-family: "Fira Sans", sans-serif; /* police utilisée */
     font-weight: bold; /* texte en gras */
-    font-size: 1.2vw;
+    font-size: 1vw;
     left: 50%; /* centre horizontalement */
     transform: translate(-50%, -50%); /* ajuste le centrage parfait */
     top: 55%; /* centre vertical approximatif dans la barre */
@@ -171,8 +179,8 @@ img {
 
 #btnConsole {
     position: absolute;
-    top: 2vh;
-    left: 0.5vw;
+    top: 13vh;
+    left: 0.4vw;
     z-index: 9999;
     width: 6vw;
     padding: 0.7vw;
@@ -194,8 +202,8 @@ img {
 
 #btnDownload {
     position: absolute;
-    top: 9vh;
-    left: 0.5vw;
+    top: 20vh;
+    left: 0.4vw;
     z-index: 9999;
     width: 6vw;
     padding: 0.7vw;
@@ -215,6 +223,28 @@ img {
     align-items: center;
 }
 
+#btnModel {
+    position: absolute;
+    top: 27vh;
+    left: 0.4vw;
+    z-index: 9999;
+    width: 6vw;
+    padding: 0.7vw;
+    border: none;
+    border-radius: 12px;
+    background: #fec800;
+    color: white;
+    font-size: 0.9vw;
+    font-weight: bold;
+    font-family: "Fira Sans", sans-serif;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    transition: all 0.25s ease;
+    z-index: 1000000;
+    display: flex;
+    justify-content: center;
+
+}
 
 #btnConsole:hover {
     transform: translateY(-2px) scale(1.03);
@@ -234,6 +264,45 @@ img {
 #btnDownload:active {
     transform: scale(0.95);
     box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+}
+
+#btnModel:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.3);
+}
+
+#btnModel:active {
+    transform: scale(0.95);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+}
+
+/* OVERLAY DU MODELE */
+
+#templatesOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+
+    background: rgba(0,0,0,0.6);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 999999999;
+}
+
+#templatesModal {
+    background: white;
+    color: black;
+    padding: 20px;
+    border-radius: 10px;
+
+    width: 400px;
+    max-height: 80vh;
+    overflow-y: auto;
 }
 
 /* ADAPTATION AU FORMAT TÉLÉPHONE */
