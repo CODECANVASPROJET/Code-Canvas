@@ -12,11 +12,16 @@
     <title>Code Canvas</title>
 </head>
 <body>
+    
+    <div class="barMenu"></div>
+    <div class="titreMenu">
+        <h1>MENU</h1>
+    </div>
     <div class="separationMenu"></div>
     <div class="screen"></div> 
     <div class="images">
-        <img src="images/LOGO-CC.png" alt="Logo" title="Code Canvas" />
-    </div>  
+        <img src="images/LOGO-CC.png" alt="Logo CODE CANVAS" title="Logo CODE CANVAS" />
+    </div>
     <div class="container">
         <div class="bloc">
             <span class="corner material-symbols-outlined">open_in_full</span>
@@ -73,13 +78,21 @@
             </iframe>
         </div>
     </div>
-    
-    <div id="consoleOutput"></div>
-    <button id="btnConsole" onclick="toggleConsole()">CONSOLE</button>
-    
-    <button id="btnDownload" onclick="downloadHtmlFile()">EXPORTER</button>
 
-    <button id="btnModel" onclick="modelView()">MODELE</button>
+    <div id="consoleOutput"></div>
+
+    <button id="btnConsole" onclick="toggleConsole()" alt="Afficher la console du Java Script" title="Afficher la console du Java Script">CONSOLE</button>
+    <button id="btnDownload" onclick="downloadHtmlFile()" alt="Télécharger un fichier HTML regroupant tout" title="Télécharger un fichier HTML regroupant tout">EXPORTER</button>
+    <button id="btnLearn" onclick="modelView()" alt="Modèles d'apprentissages" title="Modèles d'apprentissages">APPRENDRE</button>
+    <button id="btnModel" onclick="modelLayouts()" alt="Modèles de mise en page par défaut" title="Modèles de mise en page par défaut">MODELES</button>
+    <button id="btnReload" onclick="reloadPage()" alt="Position des fenêtres par défaut" title="Position des fenêtres par défaut">RAFRAICHIR</button>
+    <button id="btnClear" onclick="storageClear()" alt="Supprimer le contenu des fenêtres" title="Supprimer le contenu des fenêtres">NETTOYER</button>
+
+    <div id="btnLearning">
+        <button class="btnLayout" onclick="">LAYOUT</button>
+        <!-- mettre le reste des boutons -->
+        <button class="btnClose" onclick="">FERMER</button>
+    </div>
     
     <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.4/dist/purify.min.js"></script>

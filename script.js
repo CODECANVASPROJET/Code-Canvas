@@ -6,6 +6,10 @@ const borders = document.querySelector(".screen"); // récupère le conteneur pr
 const menuBorder = document.querySelector(".separationMenu"); // récupère la séparation du menu
 const renderFrame = document.getElementById("windowRender"); // récupère l'iframe de rendu
 const consoleOutput = document.getElementById("consoleOutput"); // récupère la zone d'affichage de la console perso
+const blocHtml = document.getElementById("windowHtml").closest(".bloc");
+const blocCss = document.getElementById("windowCss").closest(".bloc");
+const blocJs = document.getElementById("windowJs").closest(".bloc");
+const blocRender = document.getElementById("windowRender").closest(".bloc");
 
 bars.forEach(bar => { bar.addEventListener("mousedown", mouseDown) }); // active le drag sur chaque barre
 cornWindows.forEach(corner => { corner.addEventListener("mousedown", resizeWindow) }); // active le resize sur chaque coin
@@ -193,6 +197,8 @@ function updatePreviewDelayed(){ // applique un délai avant de relancer le rend
     }, 400);
 }
 
+// BOUTON AFFICHER LA CONSOLE
+
 function toggleConsole() { // affiche ou cache la console
     const consoleBox = document.getElementById("consoleOutput"); // récupère la console
 
@@ -203,7 +209,7 @@ function toggleConsole() { // affiche ou cache la console
     }
 }
 
-// TELECHARGER UN FICHIER HTML
+// BOUTON TELECHARGER UN FICHIER HTML
 
 function downloadHtmlFile(){ // télécharge un fichier html complet avec le code HTML, CSS et JS réunis
     const html = localStorage.getItem("code_html") || ""; // récupère le code HTML sauvegardé
@@ -242,43 +248,78 @@ function downloadHtmlFile(){ // télécharge un fichier html complet avec le cod
     URL.revokeObjectURL(url); // libère l'URL temporaire
 }
 
-// FONCTION DU BOUTON MODELE
+// BOUTON APPRENDRE
 
 function modelView() {
     if (document.getElementById("templatesOverlay")) return;
-    
-    
-    const overlay = document.createElement("div"); // créer overlay
+
+    const overlay = document.createElement("div");
     overlay.id = "templatesOverlay";
 
-    // contenu fenêtre
     overlay.innerHTML = `
         <div id="templatesModal">
-            <h2>Choisir un modèle</h2>
-
-            <div id="templatesList">
-                <!-- tes futurs modèles ici -->
-            </div>
-
-            <button onclick="closeTemplatesWindow()">Fermer</button>
+            <div id="templatesList"></div>
         </div>
     `;
 
     document.body.appendChild(overlay);
+
+    const btnLearning = document.getElementById("btnLearning");
+    const templatesList = document.getElementById("templatesList");
+
+    if (btnLearning && templatesList) {
+        const clone = btnLearning.cloneNode(true);
+        templatesList.appendChild(clone);
+
+        const btnClose = clone.querySelector(".btnClose");
+
+        clone.style.display = "block";
+
+        if (btnClose) {
+            btnClose.addEventListener("click", closeWindow);
+        }
+    }
 }
 
-function closeTemplatesWindow() {
+function modelLayouts(){
+    // code
+}
+
+function closeWindow() {
     const overlay = document.getElementById("templatesOverlay");
     if (overlay) overlay.remove();
 }
 
+// BOUTON RAFRAICHIR LES POSITIONS PAS DEFAUT
 
-document.addEventListener("DOMContentLoaded", () => { // liaison bouton
-    const btn = document.getElementById("btnModel");
+function reloadPage(){
+    blocHtml.style.left = "8vw";
+    blocHtml.style.top = "3vh";
+    blocHtml.style.width = "49vw";
+    blocHtml.style.height = "30vh";
 
-    if (btn) {
-        btn.addEventListener("click", modelView);
-    } else {
-        console.log("btnModel introuvable");
-    }
-});
+    blocCss.style.left = "8vw";
+    blocCss.style.top = "35vh";
+    blocCss.style.width = "49vw";
+    blocCss.style.height = "30vh";
+
+    blocJs.style.left = "8vw";
+    blocJs.style.top = "67vh";
+    blocJs.style.width = "49vw";
+    blocJs.style.height = "30vh";
+
+    blocRender.style.left = "58vw";
+    blocRender.style.top = "3vh";
+    blocRender.style.width = "41vw";
+    blocRender.style.height = "93.9vh";
+}
+
+// BOUTON POUR RESET LE LOCAL STORAGE
+
+function storageClear(){
+    localStorage.clear();
+    document.getElementById("windowHtml").contentWindow.location.reload();
+    document.getElementById("windowCss").contentWindow.location.reload();
+    document.getElementById("windowJs").contentWindow.location.reload();
+    document.getElementById("windowRender").contentWindow.location.reload();
+}
