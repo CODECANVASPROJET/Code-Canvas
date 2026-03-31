@@ -117,6 +117,23 @@ img {
     background-color: white;
 }
 
+.bloc:nth-child(5) iframe{
+    background-color: white;
+}
+
+.dropRender {
+    position: absolute;
+    top: 0.4vh;
+    right: 0.2vw;
+    width: 10vw;
+    height: 2vh;
+    border-radius: 1vw;
+    background: rgba(255,255,255,0.25);
+    z-index: 20;
+    pointer-events: none;
+}
+
+
 .bloc:nth-child(1) { /* HTML */
     top: 3vh; /* position verticale */
     left: 8vw; /* position horizontale */
@@ -139,6 +156,13 @@ img {
     height: 93.9vh; /* hauteur presque pleine */
 }
 
+.bloc:nth-child(5) { /* Rendu */
+    top: 7.9vh; /* position verticale */
+    left: 59vw; /* position horizontale */
+    width: 15vw; /* largeur spécifique */
+    height: 30vh; /* hauteur presque pleine */
+}
+
 .texte { /* titre des fenêtres (HTML, CSS, JS) */
     position: absolute; /* position libre dans la barre */
     z-index: 3; /* au-dessus de tout */
@@ -149,6 +173,7 @@ img {
     left: 50%; /* centre horizontalement */
     transform: translate(-50%, -50%); /* ajuste le centrage parfait */
     top: 55%; /* centre vertical approximatif dans la barre */
+    user-select: none; /* empêche sélection texte */
 }
 
 .corner {
@@ -163,23 +188,53 @@ img {
     transform: scaleX(-1);
 }
 
-.cornerRender {
+.bloc:nth-child(4) .corner, .bloc:nth-child(5) .corner {
+    color: rgb(0, 0, 0);
+}
+
+.size {
     position: absolute;
-    right: 5px;
-    bottom: 5px;
     font-size: 1vw; /* taille de l’icône */
-    color: rgb(0, 0, 0); /* couleur */
-    cursor: nwse-resize;
+    color: rgb(255, 255, 255); /* couleur */
     z-index: 3;
     user-select: none; /* empêche sélection texte */
-    transform: scaleX(-1);
 }
+
+#resize {
+    border: 0px;
+    background: none;
+    display: flex;
+    align-items: center;   /* centre vertical */
+    justify-content: center; /* centre horizontal */
+    padding: 0.7vw;
+    cursor: pointer;
+}
+
+/* taille du modele réduit */
+
+.bloc.mini {
+    overflow: hidden;
+}
+
+.bloc.mini iframe {
+    display: none;
+}
+
+.bloc.mini .bar {
+    height: 100%;
+    cursor: default;
+}
+
+.bloc.mini .corner {
+    display: none;
+}
+
 
 #consoleOutput {
     position: absolute;
     bottom: 0;
-    left: 0;
-    width: 100%;
+    left: 7vw;
+    width: 93vw;
     height: 25vh;
     background: #111;
     color: #ddd;

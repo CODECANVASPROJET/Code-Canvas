@@ -10,58 +10,103 @@ const blocHtml = document.getElementById("windowHtml").closest(".bloc");
 const blocCss = document.getElementById("windowCss").closest(".bloc");
 const blocJs = document.getElementById("windowJs").closest(".bloc");
 const blocRender = document.getElementById("windowRender").closest(".bloc");
+const blocModel = document.getElementById("windowModel").closest(".bloc");
+const dropRender = document.querySelector(".dropRender");
 
 bars.forEach(bar => { bar.addEventListener("mousedown", mouseDown) }); // active le drag sur chaque barre
 cornWindows.forEach(corner => { corner.addEventListener("mousedown", resizeWindow) }); // active le resize sur chaque coin
 
-function mouseDown(e){ // déclenché au clic sur une barre
-    document.querySelectorAll(".bloc").forEach(el => el.style.zIndex = 1); // remet tous les blocs derrière
-    activeBox = e.target.closest(".bloc"); // récupère le bloc cliqué
-    activeBox.style.zIndex = 2; // met ce bloc au-dessus
-    document.querySelectorAll("iframe").forEach(el => el.style.pointerEvents = "none"); // désactive interaction iframe pendant drag
+function mouseDown(e){
+    document.querySelectorAll(".bloc").forEach(el => el.style.zIndex = 1);
+    activeBox = e.target.closest(".bloc");
 
-    startX = e.clientX; // position X initiale de la souris
-    startY = e.clientY; // position Y initiale de la souris
+    const rect = activeBox.getBoundingClientRect();
+    const parentRect = borders.getBoundingClientRect();
 
-    document.addEventListener("mousemove", mouseMove); // écoute le déplacement de la souris
-    document.addEventListener("mouseup", mouseUp); // écoute le relâchement
+    currentTop = rect.top - parentRect.top;
+    currentLeft = rect.left - parentRect.left;
+
+    const iframe = activeBox.querySelector("iframe");
+    if (iframe) iframe.style.opacity = "1";
+
+    if (activeBox.classList.contains("mini")) return;
+    activeBox.style.zIndex = 2;
+    activeBox.style.opacity = "100%";
+    document.querySelectorAll("iframe").forEach(el => el.style.pointerEvents = "none");
+
+    // Si le modèle était snappé, on lui remet une taille fixe au début du drag
+    if (activeBox === blocModel && activeBox.dataset.snapped === "true") {
+        activeBox.style.width = "15vw";
+        activeBox.style.height = "30vh";
+        activeBox.dataset.snapped = "false";
+
+        // Centre le bloc sous la souris
+        const w = activeBox.offsetWidth;
+        const h = activeBox.offsetHeight;
+        const parentRect = borders.getBoundingClientRect();
+        const newLeft = e.clientX - parentRect.left - w / 2;
+        activeBox.style.left = (newLeft / borders.clientWidth) * 100 + "%";
+    }
+
+    startX = e.clientX;
+    startY = e.clientY;
+
+    document.addEventListener("mousemove", mouseMove);
+    document.addEventListener("mouseup", mouseUp);
 }
 
-function mouseMove(e){ // gère le déplacement du bloc
-    newX = startX - e.clientX; // calcule le déplacement horizontal
-    newY = startY - e.clientY; // calcule le déplacement vertical
+function mouseMove(e){
+    const parentRect = borders.getBoundingClientRect();
+    const barHeight = activeBox.querySelector(".bar").offsetHeight;
 
-    startX = e.clientX; // met à jour la position X de référence
-    startY = e.clientY; // met à jour la position Y de référence
-
-    const newTop = Math.max(0, Math.min( // limite verticale
-        activeBox.offsetTop - newY, // nouvelle position calculée
-        borders.clientHeight - activeBox.offsetHeight // limite basse du screen
+    const newTop = Math.max(0, Math.min(
+        e.clientY - parentRect.top - barHeight / 2,
+        borders.clientHeight - activeBox.offsetHeight
     ));
 
-    const newLeft = Math.max( // limite horizontale gauche + droite
-        menuBorder.offsetLeft + menuBorder.offsetWidth, // empêche de passer sur le menu
+    const newLeft = Math.max(
+        menuBorder.offsetLeft + menuBorder.offsetWidth,
         Math.min(
-            activeBox.offsetLeft - newX, // nouvelle position calculée
-            borders.clientWidth - activeBox.offsetWidth // limite droite du screen
+            e.clientX - parentRect.left - activeBox.offsetWidth / 2,
+            borders.clientWidth - activeBox.offsetWidth
         )
     );
 
-    activeBox.style.top = (newTop / borders.clientHeight) * 100 + "%"; // applique position verticale en %
-    activeBox.style.left = (newLeft / borders.clientWidth) * 100 + "%"; // applique position horizontale en %
+    activeBox.style.top = (newTop / borders.clientHeight) * 100 + "%";
+    activeBox.style.left = (newLeft / borders.clientWidth) * 100 + "%";
 }
 
-function mouseUp(){ // déclenché quand la souris est relâchée
-    document.removeEventListener("mousemove", mouseMove); // arrête le déplacement
-    document.removeEventListener("mouseup", mouseUp); // arrête l'écoute du relâchement
-    document.querySelectorAll("iframe").forEach(el => el.style.pointerEvents = "auto"); // réactive interaction iframe
+function mouseUp(e){
+    if (activeBox === blocModel && isMouseInElement(e.clientX, e.clientY, dropRender)) {
+        const renderRect = blocRender.getBoundingClientRect();
+        const bordersRect = borders.getBoundingClientRect();
+        const iframe = activeBox.querySelector("iframe");
+    
+        const top = renderRect.top - bordersRect.top;
+        const left = renderRect.left - bordersRect.left;
+        const width = renderRect.width;
+        const height = renderRect.height;
+    
+        activeBox.style.top = (top / borders.clientHeight) * 100 + "%";
+        activeBox.style.left = (left / borders.clientWidth) * 100 + "%";
+        activeBox.style.width = (width / borders.clientWidth) * 100 + "%";
+        activeBox.style.height = (height / borders.clientHeight) * 100 + "%";
+        activeBox.dataset.snapped = "true";
+        iframe.style.opacity = "50%";
+    }
+    document.removeEventListener("mousemove", mouseMove);
+    document.removeEventListener("mouseup", mouseUp);
+    document.querySelectorAll("iframe").forEach(el => el.style.pointerEvents = "auto");
 }
 
 function resizeWindow(e){ // déclenché au clic sur un coin
+    e.preventDefault(); 
+
     document.querySelectorAll(".bloc").forEach(el => el.style.zIndex = 1); // remet tous les blocs derrière
     document.querySelectorAll("iframe").forEach(el => el.style.pointerEvents = "none"); // désactive interaction iframe
 
     pane = e.target.closest(".bloc"); // récupère le bloc à redimensionner
+    if (pane.classList.contains("mini")) return;
     pane.style.zIndex = 2; // met ce bloc au-dessus
 
     let w = pane.clientWidth; // largeur initiale du bloc
@@ -90,7 +135,9 @@ function resizeWindow(e){ // déclenché au clic sur un coin
     const mouseup = () => { // quand on relâche la souris
         document.removeEventListener("mousemove", drag); // stop resize
         document.removeEventListener("mouseup", mouseup); // stop écoute
-        document.querySelectorAll("iframe").forEach(el => el.style.pointerEvents = "auto"); // réactive iframe
+        document.querySelectorAll("iframe").forEach(el => {  // réactive iframe
+            if (el.style.display !== "none") el.style.pointerEvents = "auto";
+        });
     };
 
     document.addEventListener("mousemove", drag); // écoute le mouvement pour resize
@@ -312,6 +359,12 @@ function reloadPage(){
     blocRender.style.top = "3vh";
     blocRender.style.width = "41vw";
     blocRender.style.height = "93.9vh";
+
+    blocModel.style.top = "7.9vh"; 
+    blocModel.style.left = "59vw"; 
+    blocModel.style.width = "15vw";
+    blocModel.style.height = "30vh";
+
 }
 
 // BOUTON POUR RESET LE LOCAL STORAGE
@@ -322,4 +375,50 @@ function storageClear(){
     document.getElementById("windowCss").contentWindow.location.reload();
     document.getElementById("windowJs").contentWindow.location.reload();
     document.getElementById("windowRender").contentWindow.location.reload();
+}
+
+// BOUTON POUR LA TAILLE DU MODEL
+
+function toggleMini(button) {
+    const bloc = button.closest(".bloc");
+    const iframe = bloc.querySelector("iframe");
+
+    if (!bloc.classList.contains("mini")) {
+        bloc.dataset.oldTop = bloc.style.top || "";
+        bloc.dataset.oldLeft = bloc.style.left || "";
+        bloc.dataset.oldWidth = bloc.style.width || "";
+        bloc.dataset.oldHeight = bloc.style.height || "";
+
+        bloc.classList.add("mini");
+        iframe.style.display = "none";
+
+        bloc.style.position = "absolute";
+        bloc.style.top = "97vh";
+        bloc.style.left = "91vw";
+        bloc.style.width = "8vw";
+        bloc.style.height = "3vh";
+        bloc.style.zIndex = 999999999;
+    } else {
+        bloc.classList.remove("mini");
+        iframe.style.display = "";
+
+        bloc.style.top = bloc.dataset.oldTop;
+        bloc.style.left = bloc.dataset.oldLeft;
+        bloc.style.width = bloc.dataset.oldWidth;
+        bloc.style.height = bloc.dataset.oldHeight;
+        bloc.style.zIndex = 10;
+    }
+}
+
+// Test si la souris est dans la zone
+
+function isMouseInElement(mouseX, mouseY, element) {
+    const rect = element.getBoundingClientRect();
+
+    return (
+        mouseX >= rect.left &&
+        mouseX <= rect.right &&
+        mouseY >= rect.top &&
+        mouseY <= rect.bottom
+    );
 }
