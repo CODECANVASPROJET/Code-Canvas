@@ -21,7 +21,7 @@ html, body, .screen{ /* impact le div "screen" dans le body du html */
     width: 4.5vw;
     height: 0.5vh;
     background-color: white;
-    z-index: 1000000000000;
+    z-index: 10000;
     top: 18.9vh;
     left: 1.2vw;
     user-select: none;
@@ -32,7 +32,7 @@ html, body, .screen{ /* impact le div "screen" dans le body du html */
     left: 0.8vw;
     position: absolute;
     background: none;
-    z-index: 1000000000;
+    z-index: 10000;
     font-size: 1vw;
     font-family: "Fira Sans" ,sans-serif;
     color: white;
