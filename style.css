@@ -76,7 +76,7 @@ html, body, .screen{ /* impact le div "screen" dans le body du html */
     height: 3vh; /* hauteur fixe de la barre */
     border-top-left-radius: 10px; /* arrondi coin haut gauche */
     border-top-right-radius: 10px; /* arrondi coin haut droit */
-    cursor: pointer; /* curseur main pour indiquer le drag */
+    cursor: move; /* curseur main pour indiquer le drag */
     box-sizing: border-box; /* inclut bordures dans la taille */
     border: 0.1vw solid black;
     background-color: black;
@@ -192,6 +192,10 @@ img {
     color: rgb(0, 0, 0);
 }
 
+.bloc:nth-child(5) {
+    display: none;
+}
+
 .size {
     position: absolute;
     font-size: 1vw; /* taille de l’icône */
@@ -201,6 +205,7 @@ img {
 }
 
 #resize {
+    position: absolute;
     border: 0px;
     background: none;
     display: flex;
@@ -208,6 +213,18 @@ img {
     justify-content: center; /* centre horizontal */
     padding: 0.7vw;
     cursor: pointer;
+}
+
+#close {
+    color: white;
+    border: 0px;
+    background: none;
+    position: absolute;
+    cursor: pointer;
+    right: 0vw;
+    top: 43%;
+    font-size: 1.1vw;
+    transform: translateY(-50%);
 }
 
 /* taille du modele réduit */
@@ -257,7 +274,7 @@ img {
     color: red;
 }
 
-#btnConsole, #btnDownload, #btnLearn, #btnModel, #btnReload, #btnClear, .btnLayout, .btnClose{
+#btnConsole, #btnDownload, #btnLearn, #btnModel, #btnReload, #btnClear, .btnLayout, .btnClose, .btnExercise{
     position: absolute;
     left: 0.4vw;
     z-index: 9999;
@@ -310,12 +327,42 @@ img {
 #btnConsole:hover, #btnDownload:hover, #btnLearn:hover, #btnModel:hover, #btnReload:hover, #btnClear:hover{
     transform: translateY(-2px) scale(1.03);
     box-shadow: 0 8px 18px rgba(0,0,0,0.3);
-    background: linear-gradient(45deg, rgb(26, 26, 26), grey, black);
+    background: linear-gradient(45deg, rgb(26, 26, 26), grey);
 }
 
-.btnLayout:hover, .btnClose:hover {
+.btnLayout:hover, .btnClose:hover, .btnExercise:hover {
     transform: translateY(-2px) scale(1.03);
     box-shadow: 0 8px 18px rgba(0,0,0,0.3);
+}
+
+.buttonsCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2vw;
+    width: 100%;
+}
+
+.btnLayout {
+    position: static;
+    background-color: #00a5a5;
+    padding: 12vh 6vw;
+}
+
+.btnExercise {
+    position: static;
+    background-color: #fec800;
+    padding: 12vh 6vw;
+}
+
+.btnClose {
+    background-color: red;
+    position: absolute;
+    top: 31vh;
+    left: 13.5vw;
+    width: 5vw;
+    height: 2vh;
+    align-items: center;
 }
 
 /* OVERLAY DU MODELE */
@@ -345,23 +392,6 @@ img {
 
 #btnLearning {
     display: none;
-}
-
-.btnLayout {
-    position: absolute;
-    background-color: #e94a34;
-    left: 1.5vw;
-    padding: 5vh 3vw;
-}
-
-.btnClose {
-    background-color: red;
-    position: absolute;
-    top: 31vh;
-    left: 27vw;
-    width: 5vw;
-    height: 2vh;
-    align-items: center;
 }
 
 /* ADAPTATION AU FORMAT TÉLÉPHONE */

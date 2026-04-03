@@ -1,0 +1,60 @@
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f4f4f4;
+  font-family: Arial, sans-serif;
+}
+
+/* CARTE FULL IMPACT */
+.card {
+  width: 60vw;
+  height: 60vh;
+  padding: 4vw;
+  background: white;
+  border-radius: 3vw;
+  box-shadow: 0 3vw 6vw rgba(0, 0, 0, 0.1);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-1vw);
+  box-shadow: 0 4vw 8vw rgba(0, 0, 0, 0.15);
+}
+
+/* TEXTE MASSIF */
+.card h2 {
+  font-size: 4vw;
+  margin-bottom: 2vw;
+}
+
+.card p {
+  font-size: 2vw;
+  margin-bottom: 3vw;
+  color: #555;
+}
+
+/* BOUTON MASSIF */
+.card button {
+  padding: 1.8vw 4vw;
+  font-size: 1.8vw;
+  border: none;
+  border-radius: 1.5vw;
+  background: #111;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.card button:hover {
+  transform: scale(1.08);
+}

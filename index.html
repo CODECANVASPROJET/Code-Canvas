@@ -87,7 +87,7 @@
                 <button id="resize" onclick="toggleMini(this)">
                     <span class="size material-symbols-outlined">picture_in_picture_alt</span>
                 </button>
-                
+                <button id="close" onclick="closeModel(this)">x</button>
             </div>
             <iframe
                 id="windowModel"
@@ -101,12 +101,31 @@
     <button id="btnConsole" onclick="toggleConsole()" alt="Afficher la console du Java Script" title="Afficher la console du Java Script">CONSOLE</button>
     <button id="btnDownload" onclick="downloadHtmlFile()" alt="Télécharger un fichier HTML regroupant tout" title="Télécharger un fichier HTML regroupant tout">EXPORTER</button>
     <button id="btnLearn" onclick="modelView()" alt="Modèles d'apprentissages" title="Modèles d'apprentissages">APPRENDRE</button>
-    <button id="btnModel" onclick="modelLayouts()" alt="Modèles de mise en page par défaut" title="Modèles de mise en page par défaut">MODELES</button>
+    <button id="btnModel" onclick="modelDispositions()" alt="Modèles de mise en page par défaut" title="Modèles de mise en page par défaut">MODELES</button>
     <button id="btnReload" onclick="reloadPage()" alt="Position des fenêtres par défaut" title="Position des fenêtres par défaut">RAFRAICHIR</button>
     <button id="btnClear" onclick="storageClear()" alt="Supprimer le contenu des fenêtres" title="Supprimer le contenu des fenêtres">NETTOYER</button>
     <div id="btnLearning">
-        <button class="btnLayout" onclick="">LAYOUT</button>
-        <button class="btnClose" onclick="">FERMER</button>
+        <div class="buttonsCenter">
+            <button class="btnLayout" onclick="showLayouts()">LAYOUT</button>
+
+            <div id="layoutButtons" style="display: none;">
+                <button onclick="loadLayout('./learn/layout/layout1.html')">MODELE 1</button>
+                <button onclick="loadLayout('./learn/layout/layout2.html')">MODELE 2</button>
+                <button onclick="loadLayout('./learn/layout/layout3.html')">MODELE 3</button>
+            </div>
+
+            <button class="btnExercise" onclick="showExercise()">EXERCICES</button>
+
+            <div id="exerciseButtons" style="display: none;">
+                <button onclick="loadLayout()">Exercice Grille (grid)</button>
+                <button onclick="loadLayout()">Exercice Menu (déroulant)</button>
+                <button onclick="loadLayout()">Exercice Bouton (hover)</button>
+            </div>
+
+            <div class="closeCenter">
+                <button class="btnClose" onclick="closeWindow()">FERMER</button>
+            </div>
+        </div>
     </div>
     
     <script src="script.js"></script>

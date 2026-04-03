@@ -1,0 +1,27 @@
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #0f172a;
+  font-family: Arial, sans-serif;
+}
+
+.btnGlow {
+  width: 80vw;
+  height: 50vh;
+  font-size: 6vw;
+  color: white;
+  background: linear-gradient(135deg, #3b82f6, #9333ea);
+  border: none;
+  border-radius: 4vw;
+  cursor: pointer;
+  box-shadow: 0 0 0 rgba(147, 51, 234, 0.5);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.btnGlow:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 8vw rgba(147, 51, 234, 0.55);
+}

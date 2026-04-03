@@ -328,7 +328,52 @@ function modelView() {
     }
 }
 
-function modelLayouts(){
+function showLayouts() {
+    const overlay = document.getElementById("templatesOverlay");
+    if (!overlay) return;
+
+    const btnExercise = overlay.querySelector(".btnExercise");
+    const btnLayout = overlay.querySelector(".btnLayout");
+    const layoutButtons = overlay.querySelector("#layoutButtons");
+    if (layoutButtons) {
+        layoutButtons.style.display = "block";
+    }
+
+    if (btnLayout) {
+        btnExercise.style.display = "none";
+        btnLayout.style.display = "none";
+    }
+}
+
+function showExercise() {
+    const overlay = document.getElementById("templatesOverlay");
+    if (!overlay) return;
+
+    const btnLayout = overlay.querySelector(".btnLayout");
+    const btnExercise = overlay.querySelector(".btnExercise");
+    const exerciseButtons = overlay.querySelector("#exerciseButtons");
+    if (exerciseButtons) {
+        exerciseButtons.style.display = "block";
+    }
+
+    if (btnExercise) {
+        btnExercise.style.display = "none";
+        btnLayout.style.display = "none";
+    }
+}
+
+function loadLayout(path) {
+    const frame = document.getElementById("windowModel");
+
+    if (frame) {
+        frame.src = path;
+    }
+
+    blocModel.style.display = "block";
+    closeWindow();
+}
+
+function modelDispositions(){
     // code
 }
 
@@ -410,7 +455,7 @@ function toggleMini(button) {
     }
 }
 
-// Test si la souris est dans la zone
+// TEST SI LA SOURIS EST DANS LA ZONE
 
 function isMouseInElement(mouseX, mouseY, element) {
     const rect = element.getBoundingClientRect();
@@ -421,4 +466,12 @@ function isMouseInElement(mouseX, mouseY, element) {
         mouseY >= rect.top &&
         mouseY <= rect.bottom
     );
+}
+
+// FERMER LA FENETE MODELE
+
+function closeModel(button) {
+    const bloc = button.closest(".bloc");
+
+    bloc.style.display = "none";
 }
