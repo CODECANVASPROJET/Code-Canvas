@@ -485,6 +485,7 @@ img {
     position: relative;
     background: #222020;
     color: white;
+    font-family: "Fira Sans", sans-serif;
     padding: 24px;
     border-radius: 12px;
     width: 28vw;
@@ -592,7 +593,11 @@ img {
 
     /* Boutons dans la barre du haut */
     #btnConsole,
-    #btnDownload {
+    #btnDownload,
+    #btnLearn,
+    #btnModel,
+    #btnReload,
+    #btnClear {
         position: absolute;
         top: 5%;
         transform: translateY(-50%);
@@ -623,18 +628,46 @@ img {
     }
 
     #btnDownload {
-        left: 28vw;
+        left: 18vw;
         background: #00a5a5;
     }
 
+    #btnLearn {
+        left: 33vw;
+        background: gray;
+    }
+
+    #btnModel {
+        left: 48vw;
+        background: gray;
+    }
+
+    #btnReload {
+        left: 63vw;
+        background: gray;
+    }
+
+    #btnClear {
+        left: 78vw;
+        background: gray;
+    }
+
     #btnConsole:hover,
-    #btnDownload:hover {
+    #btnDownload:hover,
+    #btnLearn:hover,
+    #btnModel:hover,
+    #btnReload:hover,
+    #btnClear:hover {
         transform: translateY(-50%) scale(1.03);
         box-shadow: 0 8px 18px rgba(0,0,0,0.3);
     }
 
     #btnConsole:active,
-    #btnDownload:active {
+    #btnDownload:active,
+    #btnLearn:active,
+    #btnModel:active,
+    #btnReload:active,
+    #btnClear:active {
         transform: translateY(-50%) scale(0.96);
         box-shadow: 0 3px 8px rgba(0,0,0,0.2);
     }
@@ -673,6 +706,24 @@ img {
         height: 33vh;
         width: 92vw;
         left: 4vw;
+    }
+
+    /* Modèle */
+    .bloc:nth-child(5) {
+        top: 11vh;
+        height: 15vh;
+        left: 4vw;
+        width: 92vw;
+        display: none;
+    }
+
+    /* Exercice */
+    .bloc:nth-child(6) {
+        top: 11vh;
+        height: 15vh;
+        left: 4vw;
+        width: 92vw;
+        display: none;
     }
 
     .bloc iframe {
@@ -786,6 +837,234 @@ img {
 
     .console-error {
         color: red;
+    }
+
+    /* Styles pour les overlays */
+    #templatesOverlay,
+    #modelOverlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0,0,0,0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 999999;
+    }
+
+    #templatesModal,
+    #modelModal {
+        position: relative;
+        background: #222020;
+        color: white;
+        font-family: "Fira Sans", sans-serif;
+        padding: 20px;
+        border-radius: 12px;
+        width: 90vw;
+        max-width: 400px;
+        min-height: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    #modelOptions {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.8rem;
+        width: 100%;
+    }
+
+    #modelOptions button {
+        width: 100%;
+        padding: 0.8rem 1rem;
+        background-color: #00a5a5;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-family: "Fira Sans", sans-serif;
+        font-size: 0.9rem;
+        font-weight: bold;
+    }
+
+    #modelModal .btnClose {
+        position: static;
+        width: auto;
+        padding: 0.6vh 1vw;
+        background-color: #e94a34;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-family: "Fira Sans", sans-serif;
+        font-weight: bold;
+    }
+
+    /* Styles pour les boutons learning */
+    #btnLearning {
+        display: flex;
+        flex-direction: column;
+        gap: 1vh;
+        padding: 1vh 1vw;
+        position: absolute;
+        top: 15vh;
+        left: 4vw;
+        width: 92vw;
+        background: rgba(0,0,0,0.1);
+        border-radius: 10px;
+        z-index: 25;
+    }
+
+    .buttonsCenter {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 2vw;
+        width: 100%;
+    }
+
+    .btnLayout,
+    .btnExercise {
+        position: static;
+        padding: 1vh 3vw;
+        border-radius: 5px;
+        border: none;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: clamp(12px, 3vw, 14px);
+    }
+
+    .btnLayout {
+        background-color: #00a5a5;
+    }
+
+    .btnExercise {
+        background-color: #fec800;
+    }
+
+    #layoutButtons,
+    #exerciseButtons,
+    #modelButtons {
+        display: flex;
+        flex-direction: column;
+        gap: 1vh;
+        margin-top: 1vh;
+        width: 100%;
+    }
+
+    #layoutButtons button,
+    #exerciseButtons button,
+    #modelButtons button {
+        padding: 0.5vh 2vw;
+        border-radius: 5px;
+        border: none;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: clamp(11px, 2.5vw, 13px);
+    }
+
+    #layoutButtons button {
+        background-color: #00a5a5;
+    }
+
+    #exerciseButtons button {
+        background-color: #fec800;
+    }
+
+    #modelButtons button {
+        background-color: #444;
+    }
+
+    #modelButtons .btnClose {
+        background-color: #e94a34;
+    }
+
+    /* Styles pour les blocs mini */
+    .bloc.mini {
+        overflow: hidden;
+    }
+
+    .bloc.mini iframe {
+        display: none;
+    }
+
+    .bloc.mini .bar {
+        height: 100%;
+        cursor: default;
+    }
+
+    .bloc.mini .corner {
+        display: none;
+    }
+
+    /* Styles hover pour mobile */
+    #btnLearning button:hover,
+    #modelButtons button:hover,
+    #modelOptions button:hover,
+    #modelModal .btnClose:hover,
+    .btnLayout:hover,
+    .btnExercise:hover {
+        transform: translateY(-1px) scale(1.02);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    /* Styles pour dropRender */
+    .dropRender {
+        position: absolute;
+        top: 0.4vh;
+        right: 0.2vw;
+        width: 10vw;
+        height: 2vh;
+        border-radius: 1vw;
+        background: rgba(255,255,255,0.25);
+        z-index: 20;
+        pointer-events: none;
+        display: none;
+    }
+
+    /* Styles pour les boutons resize/close */
+    #resize,
+    #close {
+        position: absolute;
+        border: 0px;
+        background: none;
+        cursor: pointer;
+        font-size: clamp(12px, 3vw, 14px);
+    }
+
+    #resize {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5vw;
+        right: 2vw;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    #close {
+        color: white;
+        right: 0.5vw;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    #close:hover {
+        color: red;
+    }
+
+    .size {
+        font-size: clamp(12px, 3vw, 14px);
     }
 }
 
