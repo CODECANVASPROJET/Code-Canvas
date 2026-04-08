@@ -49,6 +49,9 @@ html, body, .screen{ /* impact le div "screen" dans le body du html */
     height: 100vh; /* prend toute la hauteur de l’écran */
     width: 7vw;
     background-color: #222020;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
 }
 
 .bloc {
@@ -91,14 +94,20 @@ img {
     user-select: none;
 }
 
+.images {
+    position: relative;
+}
+
 .images img {
     position: absolute;
-    top: 2vh;
-    left: 1.2vw;
+    top: 1.7vh;
+    left: 50%;
+    transform: translateX(-50%);
     height: 10vh;
     z-index: 11111;
     -webkit-user-drag: none;
     user-select: none;
+    
 }
 
 .bloc:nth-child(1) .bar{
@@ -227,6 +236,10 @@ img {
     transform: translateY(-50%);
 }
 
+#close:hover {
+    color: red;
+}
+
 /* taille du modele réduit */
 
 .bloc.mini {
@@ -324,13 +337,13 @@ img {
     background-color: gray;
 }
 
-#btnConsole:hover, #btnDownload:hover, #btnLearn:hover, #btnModel:hover, #btnReload:hover, #btnClear:hover{
+#menuButtons button:hover {
     transform: translateY(-2px) scale(1.03);
     box-shadow: 0 8px 18px rgba(0,0,0,0.3);
     background: linear-gradient(45deg, rgb(26, 26, 26), grey);
 }
 
-.btnLayout:hover, .btnClose:hover, .btnExercise:hover {
+#btnLearning button:hover {
     transform: translateY(-2px) scale(1.03);
     box-shadow: 0 8px 18px rgba(0,0,0,0.3);
 }
@@ -355,19 +368,90 @@ img {
     padding: 12vh 6vw;
 }
 
-.btnClose {
-    background-color: red;
+#layoutButtons {
     position: absolute;
-    top: 31vh;
-    left: 13.5vw;
-    width: 5vw;
-    height: 2vh;
-    align-items: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;    
+}
+
+#layoutButtons button {
+    background-color: #00a5a5;
+    padding: 0.5vh 10vw;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: "Fira Sans", sans-serif;
+    margin-bottom : 2vh;
+}
+
+#layoutButtons .modelMenu {
+    background-color: #fec800;
+}
+
+#layoutButtons .modelBlock{
+    background-color: #e94a34;
+}
+
+#layoutButtons .modelLast {
+    background-color: gray;
+}
+
+#exerciseButtons {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;    
+}
+
+#exerciseButtons button {
+    background-color: #00a5a5;
+    padding: 0.5vh 10vw;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: "Fira Sans", sans-serif;
+    margin-bottom : 2vh;
+}
+
+#exerciseButtons .exercise1 {
+    background-color: #00a5a5;
+}
+
+#exerciseButtons .exercise2 {
+    background-color: #fec800;
+}
+
+#exerciseButtons .exercise3 {
+    background-color: #e94a34;
 }
 
 /* OVERLAY DU MODELE */
 
 #templatesOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999999999;
+}
+
+#modelOverlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -388,10 +472,82 @@ img {
     border-radius: 10px;
     width: 30vw;
     height: 30vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#templatesList {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#modelModal {
+    position: relative;
+    background: #222020;
+    color: white;
+    padding: 24px;
+    border-radius: 12px;
+    width: 28vw;
+    min-height: 32vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+#modelOptions {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.8rem;
+    width: 100%;
+}
+
+#modelOptions button {
+    width: 100%;
+    padding: 0.9rem 1.2rem;
+    background-color: #00a5a5;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: "Fira Sans", sans-serif;
+    font-size: 0.95rem;
+}
+
+#modelModal .btnClose {
+    position: static;
+    width: auto;
+    left: auto;
+    padding: 0.7vh 1vw;
+    background-color: #e94a34;
+}
+
+#templatesModal .btnLayout,
+#templatesModal .btnExercise {
+    padding: 10vh 5vw;
+}
+
+#templatesModal .buttonsCenter {
+    width: auto;
+}
+
+.closeCenter {
+    position: absolute;
+    top: 88%;
+    left: 79%;
+}
+
+.btnClose {
+    background-color: #e94a34;
+    padding: 0.7vh 1vw;
 }
 
 #btnLearning {
-    display: none;
+    display: none;  
 }
 
 /* ADAPTATION AU FORMAT TÉLÉPHONE */
@@ -624,3 +780,4 @@ img {
         color: red;
     }
 }
+

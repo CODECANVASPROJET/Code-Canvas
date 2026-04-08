@@ -16,11 +16,13 @@
     <div class="titreMenu">
         <h1>MENU</h1>
     </div>
-    <div class="separationMenu"></div>
-    <div class="screen"></div> 
-    <div class="images">
-        <img src="images/LOGO-CC.png" alt="Logo CODE CANVAS" title="Logo CODE CANVAS" />
+    <div class="separationMenu">
+        <div class="images">
+            <img src="images/LOGO-CC.png" alt="Logo CODE CANVAS" title="Logo CODE CANVAS" />
+        </div>
     </div>
+    <div class="screen"></div> 
+    
     <div class="container">
         <div class="bloc">
             <span class="corner material-symbols-outlined">open_in_full</span>
@@ -65,9 +67,9 @@
         </div>
 
         <div class="bloc">
-            <div class="dropRender"></div>
             <span class="corner material-symbols-outlined">open_in_full</span>
             <div class="bar">
+                <div class="dropRender"></div>
                 <div class="texte">
                     <p>Rendu</p>
                 </div>
@@ -90,7 +92,7 @@
                 <button id="close" onclick="closeModel(this)">x</button>
             </div>
             <iframe
-                id="windowModel"
+                id="windowModel"s
                 src="./learn/layout/layout1.html">
             </iframe>
         </div>
@@ -98,28 +100,33 @@
 
     <div id="consoleOutput"></div>
 
-    <button id="btnConsole" onclick="toggleConsole()" alt="Afficher la console du Java Script" title="Afficher la console du Java Script">CONSOLE</button>
-    <button id="btnDownload" onclick="downloadHtmlFile()" alt="Télécharger un fichier HTML regroupant tout" title="Télécharger un fichier HTML regroupant tout">EXPORTER</button>
-    <button id="btnLearn" onclick="modelView()" alt="Modèles d'apprentissages" title="Modèles d'apprentissages">APPRENDRE</button>
-    <button id="btnModel" onclick="modelDispositions()" alt="Modèles de mise en page par défaut" title="Modèles de mise en page par défaut">MODELES</button>
-    <button id="btnReload" onclick="reloadPage()" alt="Position des fenêtres par défaut" title="Position des fenêtres par défaut">RAFRAICHIR</button>
-    <button id="btnClear" onclick="storageClear()" alt="Supprimer le contenu des fenêtres" title="Supprimer le contenu des fenêtres">NETTOYER</button>
+    <div id="menuButtons">
+        <button id="btnConsole" onclick="toggleConsole()" alt="Afficher la console du Java Script" title="Afficher la console du Java Script">CONSOLE</button>
+        <button id="btnDownload" onclick="downloadHtmlFile()" alt="Télécharger un fichier HTML regroupant tout" title="Télécharger un fichier HTML regroupant tout">EXPORTER</button>
+        <button id="btnLearn" onclick="modelView()" alt="Modèles d'apprentissages" title="Modèles d'apprentissages">APPRENDRE</button>
+        <button id="btnModel" onclick="modelDispositions()" alt="Modèles de mise en page par défaut" title="Modèles de mise en page par défaut">MODELES</button>
+        <button id="btnReload" onclick="reloadPage()" alt="Position des fenêtres par défaut" title="Position des fenêtres par défaut">RAFRAICHIR</button>
+        <button id="btnClear" onclick="storageClear()" alt="Supprimer le contenu des fenêtres" title="Supprimer le contenu des fenêtres">NETTOYER</button>
+    </div>
+
     <div id="btnLearning">
         <div class="buttonsCenter">
             <button class="btnLayout" onclick="showLayouts()">LAYOUT</button>
 
             <div id="layoutButtons" style="display: none;">
-                <button onclick="loadLayout('./learn/layout/layout1.html')">MODELE 1</button>
-                <button onclick="loadLayout('./learn/layout/layout2.html')">MODELE 2</button>
-                <button onclick="loadLayout('./learn/layout/layout3.html')">MODELE 3</button>
+                <button class ="modelButton" onclick="loadLayout('./learn/layout/layout1.html')">MODELE BOUTON</button>
+                <button class ="modelMenu" onclick="loadLayout('./learn/layout/layout2.html')">MODELE MENU</button>
+                <button class ="modelBlock" onclick="loadLayout('./learn/layout/layout3.html')">MODELE BLOC</button>
+                <button class ="modelLast" onclick="loadLayout('./learn/layout/layout4.html')">MODELE Last</button>
+        
             </div>
 
             <button class="btnExercise" onclick="showExercise()">EXERCICES</button>
 
             <div id="exerciseButtons" style="display: none;">
-                <button onclick="loadLayout()">Exercice Grille (grid)</button>
-                <button onclick="loadLayout()">Exercice Menu (déroulant)</button>
-                <button onclick="loadLayout()">Exercice Bouton (hover)</button>
+                <button class ="exercise1" onclick="loadLayout('./learn/exercise/exercise1.html')">Exercice Grille (grid)</button>
+                <button class ="exercise2" onclick="loadLayout('./learn/exercise/exercise2.html')">Exercice Menu (déroulant)</button>
+                <button class ="exercise3" onclick="loadLayout('./learn/exercise/exercise3.html')">Exercice Bouton (hover)</button>
             </div>
 
             <div class="closeCenter">
@@ -132,3 +139,4 @@
     <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.4/dist/purify.min.js"></script>
 </body>
 </html>
+

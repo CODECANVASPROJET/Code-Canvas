@@ -1,4 +1,5 @@
 let newX = 0, newY = 0, startX = 0, startY = 0, activeBox = null, pane = null, renderTimeout = null; // variables globales pour gérer déplacement, resize et délai de rendu
+let currentDisposition = "default";
 
 const bars = document.querySelectorAll(".bar"); // récupère toutes les barres de drag
 const cornWindows = document.querySelectorAll(".corner"); // récupère tous les coins de resize
@@ -374,41 +375,99 @@ function loadLayout(path) {
 }
 
 function modelDispositions(){
-    // code
+    if (document.getElementById("modelOverlay")) return;
+
+    const overlay = document.createElement("div");
+    overlay.id = "modelOverlay";
+    overlay.innerHTML = `
+        <div id="modelModal">
+            <h2>Choix de disposition</h2>
+            <div id="modelOptions">
+                <button class="modelOption" data-layout="default">Disposition par défaut</button>
+                <button class="modelOption" data-layout="grid">Grille 2x2</button>
+                <button class="modelOption" data-layout="top-row">Code en haut / rendu en bas</button>
+                <button class="modelOption" data-layout="code-left">Code à gauche / rendu à droite</button>
+            </div>
+            <button class="btnClose" onclick="closeWindow()">FERMER</button>
+        </div>
+    `;
+
+    document.body.appendChild(overlay);
+    overlay.querySelectorAll(".modelOption").forEach(button => {
+        button.addEventListener("click", () => {
+            const layout = button.dataset.layout;
+            if (layout === "grid") {
+                applyDispositionGrid();
+            } else if (layout === "top-row") {
+                applyDispositionTopRow();
+            } else if (layout === "code-left") {
+                applyDispositionCodeLeft();
+            } else {
+                applyDispositionDefault();
+            }
+            closeWindow();
+        });
+    });
+}
+
+function setBlocStyles(bloc, left, top, width, height) {
+    bloc.style.left = left;
+    bloc.style.top = top;
+    bloc.style.width = width;
+    bloc.style.height = height;
+}
+
+function applyDispositionDefault() {
+    currentDisposition = "default";
+    setBlocStyles(blocHtml, "8vw", "3vh", "49vw", "30vh");
+    setBlocStyles(blocCss, "8vw", "35vh", "49vw", "30vh");
+    setBlocStyles(blocJs, "8vw", "67vh", "49vw", "30vh");
+    setBlocStyles(blocRender, "58vw", "3vh", "41vw", "93.9vh");
+}
+
+function applyDispositionGrid() {
+    currentDisposition = "grid";
+    setBlocStyles(blocHtml, "8vw", "3vh", "41vw", "44vh");
+    setBlocStyles(blocCss, "51vw", "3vh", "41vw", "44vh");
+    setBlocStyles(blocJs, "8vw", "49vh", "41vw", "44vh");
+    setBlocStyles(blocRender, "51vw", "49vh", "41vw", "44vh");
+}
+
+function applyDispositionTopRow() {
+    currentDisposition = "topRow";
+    setBlocStyles(blocHtml, "8vw", "3vh", "24vw", "28vh");
+    setBlocStyles(blocCss, "34vw", "3vh", "24vw", "28vh");
+    setBlocStyles(blocJs, "60vw", "3vh", "24vw", "28vh");
+    setBlocStyles(blocRender, "8vw", "36vh", "92vw", "58vh");
+}
+
+function applyDispositionCodeLeft() {
+    currentDisposition = "codeLeft";
+    setBlocStyles(blocHtml, "9vw", "3vh", "35vw", "30vh");
+    setBlocStyles(blocCss, "9vw", "35vh", "35vw", "30vh");
+    setBlocStyles(blocJs, "9vw", "67vh", "35vw", "30vh");
+    setBlocStyles(blocRender, "46vw", "3vh", "52vw", "94vh");
 }
 
 function closeWindow() {
-    const overlay = document.getElementById("templatesOverlay");
-    if (overlay) overlay.remove();
+    const templatesOverlay = document.getElementById("templatesOverlay");
+    const modelOverlay = document.getElementById("modelOverlay");
+    if (templatesOverlay) templatesOverlay.remove();
+    if (modelOverlay) modelOverlay.remove();
 }
 
 // BOUTON RAFRAICHIR LES POSITIONS PAS DEFAUT
 
 function reloadPage(){
-    blocHtml.style.left = "8vw";
-    blocHtml.style.top = "3vh";
-    blocHtml.style.width = "49vw";
-    blocHtml.style.height = "30vh";
-
-    blocCss.style.left = "8vw";
-    blocCss.style.top = "35vh";
-    blocCss.style.width = "49vw";
-    blocCss.style.height = "30vh";
-
-    blocJs.style.left = "8vw";
-    blocJs.style.top = "67vh";
-    blocJs.style.width = "49vw";
-    blocJs.style.height = "30vh";
-
-    blocRender.style.left = "58vw";
-    blocRender.style.top = "3vh";
-    blocRender.style.width = "41vw";
-    blocRender.style.height = "93.9vh";
-
-    blocModel.style.top = "7.9vh"; 
-    blocModel.style.left = "59vw"; 
-    blocModel.style.width = "15vw";
-    blocModel.style.height = "30vh";
+    if (currentDisposition == "default") {
+        applyDispositionDefault();
+    } else if (currentDisposition == "grid") {
+        applyDispositionGrid();
+    } else if (currentDisposition == "topRow") {
+        applyDispositionTopRow();
+    } else {
+        applyDispositionCodeLeft();
+    }
 
 }
 
@@ -475,3 +534,4 @@ function closeModel(button) {
 
     bloc.style.display = "none";
 }
+
