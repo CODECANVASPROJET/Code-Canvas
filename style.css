@@ -601,21 +601,21 @@ img {
         position: absolute;
         top: 5%;
         transform: translateY(-50%);
-        height: 4.8vh;
-        min-height: 38px;
-        width: 14vw;
-        min-width: 80px;
-        max-width: 140px;
+        height: 4vh;
+        min-height: 28px;
+        width: 10vw;
+        min-width: 50px;
+        max-width: 70px;
         padding: 0;
         border: none;
-        border-radius: 10px;
+        border-radius: 6px;
         color: white;
-        font-size: clamp(10px, 3vw, 12px);
+        font-size: clamp(7px, 2vw, 9px);
         font-weight: bold;
         font-family: "Fira Sans", sans-serif;
         cursor: pointer;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-        transition: all 0.25s ease;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        transition: all 0.2s ease;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -623,32 +623,32 @@ img {
     }
 
     #btnConsole {
-        left: 3vw;
+        left: 1vw;
         background: #e94a34;
     }
 
     #btnDownload {
-        left: 18vw;
+        left: 12vw;
         background: #00a5a5;
     }
 
     #btnLearn {
-        left: 33vw;
+        left: 23vw;
         background: gray;
     }
 
     #btnModel {
-        left: 48vw;
+        left: 34vw;
         background: gray;
     }
 
     #btnReload {
-        left: 63vw;
+        left: 45vw;
         background: gray;
     }
 
     #btnClear {
-        left: 78vw;
+        left: 56vw;
         background: gray;
     }
 
