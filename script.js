@@ -17,11 +17,9 @@ const dropRender = document.querySelector(".dropRender");
 
 bars.forEach(bar => { 
     bar.addEventListener("mousedown", mouseDown);
-    bar.addEventListener("touchstart", touchDown, { passive: false });
 }); // active le drag sur chaque barre
 cornWindows.forEach(corner => { 
     corner.addEventListener("mousedown", resizeWindow);
-    corner.addEventListener("touchstart", touchResize, { passive: false });
 }); // active le resize sur chaque coin
 
 function mouseDown(e){
@@ -31,8 +29,6 @@ function mouseDown(e){
     const rect = activeBox.getBoundingClientRect();
     const parentRect = borders.getBoundingClientRect();
 
-    offsetX = e.clientX - rect.left;
-    offsetY = e.clientY - rect.top;
     currentTop = rect.top - parentRect.top;
     currentLeft = rect.left - parentRect.left;
 
@@ -50,12 +46,12 @@ function mouseDown(e){
         activeBox.style.height = "30vh";
         activeBox.dataset.snapped = "false";
 
-        // Replace le bloc sous le même point de saisie
+        // Centre le bloc sous la souris
+        const w = activeBox.offsetWidth;
+        const h = activeBox.offsetHeight;
         const parentRect = borders.getBoundingClientRect();
-        const newTop = e.clientY - parentRect.top - offsetY;
-        const newLeft = e.clientX - parentRect.left - offsetX;
-        activeBox.style.top = (Math.max(0, Math.min(newTop, borders.clientHeight - activeBox.offsetHeight)) / borders.clientHeight) * 100 + "%";
-        activeBox.style.left = (Math.max(menuBorder.offsetLeft + menuBorder.offsetWidth, Math.min(newLeft, borders.clientWidth - activeBox.offsetWidth)) / borders.clientWidth) * 100 + "%";
+        const newLeft = e.clientX - parentRect.left - w / 2;
+        activeBox.style.left = (newLeft / borders.clientWidth) * 100 + "%";
     }
 
     startX = e.clientX;
@@ -70,14 +66,14 @@ function mouseMove(e){
     const barHeight = activeBox.querySelector(".bar").offsetHeight;
 
     const newTop = Math.max(0, Math.min(
-        e.clientY - parentRect.top - offsetY,
+        e.clientY - parentRect.top - barHeight / 2,
         borders.clientHeight - activeBox.offsetHeight
     ));
 
     const newLeft = Math.max(
         menuBorder.offsetLeft + menuBorder.offsetWidth,
         Math.min(
-            e.clientX - parentRect.left - offsetX,
+            e.clientX - parentRect.left - activeBox.offsetWidth / 2,
             borders.clientWidth - activeBox.offsetWidth
         )
     );
@@ -152,141 +148,6 @@ function resizeWindow(e){ // déclenché au clic sur un coin
 
     document.addEventListener("mousemove", drag); // écoute le mouvement pour resize
     document.addEventListener("mouseup", mouseup); // écoute la fin du resize
-}
-
-// FONCTIONS TACTILES POUR MOBILE
-
-function touchDown(e){
-    e.preventDefault();
-    document.querySelectorAll(".bloc").forEach(el => el.style.zIndex = 1);
-    activeBox = e.target.closest(".bloc");
-
-    const rect = activeBox.getBoundingClientRect();
-    const parentRect = borders.getBoundingClientRect();
-
-    offsetX = e.touches[0].clientX - rect.left;
-    offsetY = e.touches[0].clientY - rect.top;
-    currentTop = rect.top - parentRect.top;
-    currentLeft = rect.left - parentRect.left;
-
-    const iframe = activeBox.querySelector("iframe");
-    if (iframe) iframe.style.opacity = "1";
-
-    if (activeBox.classList.contains("mini")) return;
-    activeBox.style.zIndex = 2;
-    activeBox.style.opacity = "100%";
-    document.querySelectorAll("iframe").forEach(el => el.style.pointerEvents = "none");
-
-    // Si le modèle était snappé, on lui remet une taille fixe au début du drag
-    if (activeBox === blocModel && activeBox.dataset.snapped === "true") {
-        activeBox.style.width = "15vw";
-        activeBox.style.height = "30vh";
-        activeBox.dataset.snapped = "false";
-
-        // Centre le bloc sous le doigt
-        const w = activeBox.offsetWidth;
-        const h = activeBox.offsetHeight;
-        const parentRect = borders.getBoundingClientRect();
-        const newLeft = e.touches[0].clientX - parentRect.left - w / 2;
-        activeBox.style.left = (newLeft / borders.clientWidth) * 100 + "%";
-    }
-
-    startX = e.touches[0].clientX;
-    startY = e.touches[0].clientY;
-
-    document.addEventListener("touchmove", touchMove, { passive: false });
-    document.addEventListener("touchend", touchUp, { passive: false });
-}
-
-function touchMove(e){
-    e.preventDefault();
-    const parentRect = borders.getBoundingClientRect();
-    const barHeight = activeBox.querySelector(".bar").offsetHeight;
-
-    const newTop = Math.max(0, Math.min(
-        e.touches[0].clientY - parentRect.top - offsetY,
-        borders.clientHeight - activeBox.offsetHeight
-    ));
-
-    const newLeft = Math.max(
-        menuBorder.offsetLeft + menuBorder.offsetWidth,
-        Math.min(
-            e.touches[0].clientX - parentRect.left - offsetX,
-            borders.clientWidth - activeBox.offsetWidth
-        )
-    );
-
-    activeBox.style.top = (newTop / borders.clientHeight) * 100 + "%";
-    activeBox.style.left = (newLeft / borders.clientWidth) * 100 + "%";
-}
-
-function touchUp(e){
-    e.preventDefault();
-    if (activeBox === blocModel && isMouseInElement(e.changedTouches[0].clientX, e.changedTouches[0].clientY, dropRender)) {
-        const renderRect = blocRender.getBoundingClientRect();
-        const bordersRect = borders.getBoundingClientRect();
-        const iframe = activeBox.querySelector("iframe");
-    
-        const top = renderRect.top - bordersRect.top;
-        const left = renderRect.left - bordersRect.left;
-        const width = renderRect.width;
-        const height = renderRect.height;
-    
-        activeBox.style.top = (top / borders.clientHeight) * 100 + "%";
-        activeBox.style.left = (left / borders.clientWidth) * 100 + "%";
-        activeBox.style.width = (width / borders.clientWidth) * 100 + "%";
-        activeBox.style.height = (height / borders.clientHeight) * 100 + "%";
-        activeBox.dataset.snapped = "true";
-        iframe.style.opacity = "50%";
-    }
-    document.removeEventListener("touchmove", touchMove);
-    document.removeEventListener("touchend", touchUp);
-    document.querySelectorAll("iframe").forEach(el => el.style.pointerEvents = "auto");
-}
-
-function touchResize(e){ // déclenché au touch sur un coin
-    e.preventDefault(); 
-
-    document.querySelectorAll(".bloc").forEach(el => el.style.zIndex = 1); // remet tous les blocs derrière
-    document.querySelectorAll("iframe").forEach(el => el.style.pointerEvents = "none"); // désactive interaction iframe
-
-    pane = e.target.closest(".bloc"); // récupère le bloc à redimensionner
-    if (pane.classList.contains("mini")) return;
-    pane.style.zIndex = 2; // met ce bloc au-dessus
-
-    let w = pane.clientWidth; // largeur initiale du bloc
-    let h = pane.clientHeight; // hauteur initiale du bloc
-
-    let startX = e.touches[0].clientX; // position doigt X au début
-    let startY = e.touches[0].clientY; // position doigt Y au début
-
-    const drag = (e) => { // fonction de resize pendant mouvement
-        e.preventDefault(); // empêche comportement par défaut navigateur
-
-        const newWidth = Math.max(200, Math.min( // limite largeur
-            w + (e.touches[0].clientX - startX), // nouvelle largeur calculée
-            borders.clientWidth - pane.offsetLeft // limite droite du screen
-        ));
-
-        const newHeight = Math.max(100, Math.min( // limite hauteur
-            h + (e.touches[0].clientY - startY), // nouvelle hauteur calculée
-            borders.clientHeight - pane.offsetTop // limite basse du screen
-        ));
-
-        pane.style.width = (newWidth / borders.clientWidth) * 100 + "%"; // applique largeur en %
-        pane.style.height = (newHeight / borders.clientHeight) * 100 + "%"; // applique hauteur en %
-    };
-
-    const touchend = () => { // quand on relâche le doigt
-        document.removeEventListener("touchmove", drag); // stop resize
-        document.removeEventListener("touchend", touchend); // stop écoute
-        document.querySelectorAll("iframe").forEach(el => {  // réactive iframe
-            if (el.style.display !== "none") el.style.pointerEvents = "auto";
-        });
-    };
-
-    document.addEventListener("touchmove", drag, { passive: false }); // écoute le mouvement pour resize
-    document.addEventListener("touchend", touchend, { passive: false }); // écoute la fin du resize
 }
 
 // GESTION DE LA CONSOLE PERSO
@@ -590,70 +451,34 @@ function setBlocStyles(bloc, left, top, width, height) {
 
 function applyDispositionDefault() {
     currentDisposition = "default";
-    if (window.innerWidth <= 768) {
-        // Positions mobiles
-        setBlocStyles(blocHtml, "2vw", "8vh", "96vw", "25vh");
-        setBlocStyles(blocCss, "2vw", "35vh", "96vw", "25vh");
-        setBlocStyles(blocJs, "2vw", "62vh", "96vw", "25vh");
-        setBlocStyles(blocRender, "2vw", "89vh", "96vw", "8vh");
-    } else {
-        // Positions desktop
-        setBlocStyles(blocHtml, "8vw", "3vh", "49vw", "30vh");
-        setBlocStyles(blocCss, "8vw", "35vh", "49vw", "30vh");
-        setBlocStyles(blocJs, "8vw", "67vh", "49vw", "30vh");
-        setBlocStyles(blocRender, "58vw", "3vh", "41vw", "93.9vh");
-    }
+    setBlocStyles(blocHtml, "8vw", "3vh", "49vw", "30vh");
+    setBlocStyles(blocCss, "8vw", "35vh", "49vw", "30vh");
+    setBlocStyles(blocJs, "8vw", "67vh", "49vw", "30vh");
+    setBlocStyles(blocRender, "58vw", "3vh", "41vw", "93.9vh");
 }
 
 function applyDispositionGrid() {
     currentDisposition = "grid";
-    if (window.innerWidth <= 768) {
-        // Positions mobiles en grille
-        setBlocStyles(blocHtml, "2vw", "8vh", "47vw", "40vh");
-        setBlocStyles(blocCss, "51vw", "8vh", "47vw", "40vh");
-        setBlocStyles(blocJs, "2vw", "50vh", "47vw", "40vh");
-        setBlocStyles(blocRender, "51vw", "50vh", "47vw", "40vh");
-    } else {
-        // Positions desktop
-        setBlocStyles(blocHtml, "8vw", "3vh", "41vw", "44vh");
-        setBlocStyles(blocCss, "51vw", "3vh", "41vw", "44vh");
-        setBlocStyles(blocJs, "8vw", "49vh", "41vw", "44vh");
-        setBlocStyles(blocRender, "51vw", "49vh", "41vw", "44vh");
-    }
+    setBlocStyles(blocHtml, "8vw", "3vh", "41vw", "44vh");
+    setBlocStyles(blocCss, "51vw", "3vh", "41vw", "44vh");
+    setBlocStyles(blocJs, "8vw", "49vh", "41vw", "44vh");
+    setBlocStyles(blocRender, "51vw", "49vh", "41vw", "44vh");
 }
 
 function applyDispositionTopRow() {
     currentDisposition = "topRow";
-    if (window.innerWidth <= 768) {
-        // Positions mobiles en ligne du haut
-        setBlocStyles(blocHtml, "2vw", "8vh", "30vw", "20vh");
-        setBlocStyles(blocCss, "34vw", "8vh", "30vw", "20vh");
-        setBlocStyles(blocJs, "66vw", "8vh", "30vw", "20vh");
-        setBlocStyles(blocRender, "2vw", "30vh", "96vw", "60vh");
-    } else {
-        // Positions desktop
-        setBlocStyles(blocHtml, "8vw", "3vh", "24vw", "28vh");
-        setBlocStyles(blocCss, "34vw", "3vh", "24vw", "28vh");
-        setBlocStyles(blocJs, "60vw", "3vh", "24vw", "28vh");
-        setBlocStyles(blocRender, "8vw", "36vh", "92vw", "58vh");
-    }
+    setBlocStyles(blocHtml, "8vw", "3vh", "24vw", "28vh");
+    setBlocStyles(blocCss, "34vw", "3vh", "24vw", "28vh");
+    setBlocStyles(blocJs, "60vw", "3vh", "24vw", "28vh");
+    setBlocStyles(blocRender, "8vw", "36vh", "92vw", "58vh");
 }
 
 function applyDispositionCodeLeft() {
     currentDisposition = "codeLeft";
-    if (window.innerWidth <= 768) {
-        // Positions mobiles code à gauche
-        setBlocStyles(blocHtml, "2vw", "8vh", "65vw", "25vh");
-        setBlocStyles(blocCss, "2vw", "35vh", "65vw", "25vh");
-        setBlocStyles(blocJs, "2vw", "62vh", "65vw", "25vh");
-        setBlocStyles(blocRender, "69vw", "8vh", "29vw", "80vh");
-    } else {
-        // Positions desktop
-        setBlocStyles(blocHtml, "9vw", "3vh", "35vw", "30vh");
-        setBlocStyles(blocCss, "9vw", "35vh", "35vw", "30vh");
-        setBlocStyles(blocJs, "9vw", "67vh", "35vw", "30vh");
-        setBlocStyles(blocRender, "46vw", "3vh", "52vw", "94vh");
-    }
+    setBlocStyles(blocHtml, "9vw", "3vh", "35vw", "30vh");
+    setBlocStyles(blocCss, "9vw", "35vh", "35vw", "30vh");
+    setBlocStyles(blocJs, "9vw", "67vh", "35vw", "30vh");
+    setBlocStyles(blocRender, "46vw", "3vh", "52vw", "94vh");
 }
 
 function closeWindow() {
@@ -710,26 +535,16 @@ function toggleMini(button) {
         iframe.style.display = "none";
 
         bloc.style.position = "absolute";
+        bloc.style.top = "97vh";
         bloc.style.width = "8vw";
         bloc.style.height = "3vh";
         bloc.style.zIndex = 999999999;
 
-        if (window.innerWidth <= 768) {
-            // Positions mobiles mini
-            bloc.style.top = "97vh";
-            if (bloc === blocExercise) {
-                bloc.style.left = "75vw";
-            } else {
-                bloc.style.left = "87vw";
-            }
+        // Position différente pour l'exercice (plus à gauche)
+        if (bloc === blocExercise) {
+            bloc.style.left = "83vw";
         } else {
-            // Positions desktop mini
-            bloc.style.top = "97vh";
-            if (bloc === blocExercise) {
-                bloc.style.left = "83vw";
-            } else {
-                bloc.style.left = "91vw";
-            }
+            bloc.style.left = "91vw";
         }
     } else {
         bloc.classList.remove("mini");
@@ -756,17 +571,5 @@ function isMouseInElement(mouseX, mouseY, element) {
     );
 }
 
-// ÉCOUTEUR POUR LES CHANGEMENTS DE TAILLE D'ÉCRAN
-window.addEventListener("resize", function() {
-    // Réappliquer la disposition actuelle pour s'adapter au nouveau format
-    if (currentDisposition === "default") {
-        applyDispositionDefault();
-    } else if (currentDisposition === "grid") {
-        applyDispositionGrid();
-    } else if (currentDisposition === "topRow") {
-        applyDispositionTopRow();
-    } else if (currentDisposition === "codeLeft") {
-        applyDispositionCodeLeft();
-    }
-});
+
 

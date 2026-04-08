@@ -561,12 +561,20 @@ img {
 
 /* ADAPTATION AU FORMAT TÉLÉPHONE */
 
-@media (max-width: 768px) and (pointer: coarse) { 
+@media (max-width: 768px) and (pointer: coarse) {
+
+    html {
+        -webkit-text-size-adjust: 100%;
+    }
+
     html, body, .screen {
         padding: 0;
         margin: 0;
         width: 100%;
         height: 100%;
+    }
+
+    body {
         overflow: hidden;
     }
 
@@ -576,164 +584,63 @@ img {
         height: 100dvh;
         box-sizing: border-box;
         background-color: #2f2f2f;
+        overflow: hidden;
     }
 
-    /* Barre du menu en haut */
+    .barMenu {
+        position: absolute;
+        width: 10vw;
+        height: 0.35vh;
+        background-color: white;
+        z-index: 10000;
+        top: 6.4vh;
+        left: 3vw;
+        user-select: none;
+    }
+
+    .titreMenu {
+        top: 2.2vh;
+        left: 3vw;
+        position: absolute;
+        background: none;
+        z-index: 10000;
+        font-size: 3.2vw;
+        font-family: "Fira Sans", sans-serif;
+        color: white;
+        user-select: none;
+    }
+
+    .container {
+        display: grid;
+    }
+
     .separationMenu {
+        z-index: 3;
         position: absolute;
         top: 0;
         left: 0;
         width: 100vw;
-        height: 9vh;
-        background-color: #1f1f1f;
-        border: none;
-        border-bottom: 1px solid black;
-        z-index: 20;
-    }
-
-    /* Boutons dans la barre du haut */
-    #btnConsole,
-    #btnDownload,
-    #btnLearn,
-    #btnModel,
-    #btnReload,
-    #btnClear {
-        position: absolute;
-        top: 5%;
-        transform: translateY(-50%);
-        height: 4vh;
-        min-height: 28px;
-        width: 10vw;
-        min-width: 50px;
-        max-width: 70px;
-        padding: 0;
-        border: none;
-        border-radius: 6px;
-        color: white;
-        font-size: clamp(7px, 2vw, 9px);
-        font-weight: bold;
-        font-family: "Fira Sans", sans-serif;
-        cursor: pointer;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-        transition: all 0.2s ease;
+        height: 10vh;
+        background-color: #222020;
         display: flex;
         justify-content: center;
-        align-items: center;
-        z-index: 30;
+        align-items: flex-start;
     }
 
-    #btnConsole {
-        left: 1vw;
-        background: #e94a34;
-    }
-
-    #btnDownload {
-        left: 12vw;
-        background: #00a5a5;
-    }
-
-    #btnLearn {
-        left: 23vw;
-        background: gray;
-    }
-
-    #btnModel {
-        left: 34vw;
-        background: gray;
-    }
-
-    #btnReload {
-        left: 45vw;
-        background: gray;
-    }
-
-    #btnClear {
-        left: 56vw;
-        background: gray;
-    }
-
-    #btnConsole:hover,
-    #btnDownload:hover,
-    #btnLearn:hover,
-    #btnModel:hover,
-    #btnReload:hover,
-    #btnClear:hover {
-        transform: translateY(-50%) scale(1.03);
-        box-shadow: 0 8px 18px rgba(0,0,0,0.3);
-    }
-
-    #btnConsole:active,
-    #btnDownload:active,
-    #btnLearn:active,
-    #btnModel:active,
-    #btnReload:active,
-    #btnClear:active {
-        transform: translateY(-50%) scale(0.96);
-        box-shadow: 0 3px 8px rgba(0,0,0,0.2);
-    }
-
-    /* Blocs */
     .bloc {
         position: absolute;
         width: 92vw;
         user-select: none;
     }
 
-    /* HTML */
-    .bloc:nth-child(1) {
-        top: 11vh;
-        height: 15vh;
-        left: 4vw;
-    }
-
-    /* CSS */
-    .bloc:nth-child(2) {
-        top: 27.5vh;
-        height: 15vh;
-        left: 4vw;
-    }
-
-    /* JS */
-    .bloc:nth-child(3) {
-        top: 44vh;
-        height: 15vh;
-        left: 4vw;
-    }
-
-    /* Rendu */
-    .bloc:nth-child(4) {
-        top: 60.5vh;
-        height: 33vh;
-        width: 92vw;
-        left: 4vw;
-    }
-
-    /* Modèle */
-    .bloc:nth-child(5) {
-        top: 11vh;
-        height: 15vh;
-        left: 4vw;
-        width: 92vw;
-        display: none;
-    }
-
-    /* Exercice */
-    .bloc:nth-child(6) {
-        top: 11vh;
-        height: 15vh;
-        left: 4vw;
-        width: 92vw;
-        display: none;
-    }
-
     .bloc iframe {
         z-index: 1;
         width: 100%;
-        height: calc(100% - 5vh);
-        border: 1px solid black;
+        height: calc(100% - 4.5vh);
+        border: 0.35vw solid black;
         border-top: 0;
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 10px;
+        border-bottom-left-radius: 2.5vw;
+        border-bottom-right-radius: 2.5vw;
         box-sizing: border-box;
         display: block;
     }
@@ -742,14 +649,34 @@ img {
         position: relative;
         z-index: 2;
         width: 100%;
-        height: 5vh;
+        height: 4.5vh;
         min-height: 34px;
-        background-color: #000000;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-        cursor: default;
+        border-top-left-radius: 2.5vw;
+        border-top-right-radius: 2.5vw;
+        cursor: move;
         box-sizing: border-box;
-        border: 1px solid black;
+        border: 0.35vw solid black;
+        background-color: black;
+    }
+
+    img {
+        -webkit-user-drag: none;
+        user-select: none;
+    }
+
+    .images {
+        position: relative;
+    }
+
+    .images img {
+        position: absolute;
+        top: 1.3vh;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 6vh;
+        z-index: 11111;
+        -webkit-user-drag: none;
+        user-select: none;
     }
 
     .bloc:nth-child(1) .bar {
@@ -768,228 +695,135 @@ img {
         background-color: white;
     }
 
+    .bloc:nth-child(5) iframe {
+        background-color: white;
+    }
+
+    .dropRender {
+        position: absolute;
+        top: 0.7vh;
+        right: 1vw;
+        width: 18vw;
+        height: 2.3vh;
+        border-radius: 3vw;
+        background: rgba(255,255,255,0.25);
+        z-index: 20;
+        pointer-events: none;
+        display: none;
+    }
+
+    .bloc:nth-child(1) {
+        top: 12vh;
+        left: 4vw;
+        height: 14.5vh;
+    }
+
+    .bloc:nth-child(2) {
+        top: 28vh;
+        left: 4vw;
+        height: 14.5vh;
+    }
+
+    .bloc:nth-child(3) {
+        top: 44vh;
+        left: 4vw;
+        height: 14.5vh;
+    }
+
+    .bloc:nth-child(4) {
+        top: 60vh;
+        left: 4vw;
+        width: 92vw;
+        height: 34vh;
+    }
+
+    .bloc:nth-child(5) {
+        top: 12vh;
+        left: 4vw;
+        width: 92vw;
+        height: 20vh;
+        display: none;
+    }
+
+    .bloc:nth-child(6) {
+        top: 12vh;
+        left: 4vw;
+        width: 92vw;
+        height: 20vh;
+        display: none;
+    }
+
     .texte {
         position: absolute;
         z-index: 3;
         color: rgb(255, 255, 255);
         font-family: "Fira Sans", sans-serif;
         font-weight: bold;
-        font-size: clamp(12px, 3.6vw, 15px);
+        font-size: 3.4vw;
         left: 50%;
-        top: 50%;
         transform: translate(-50%, -50%);
+        top: 55%;
+        user-select: none;
         white-space: nowrap;
     }
 
-    .corner,
-    .cornerRender {
+    .corner {
         position: absolute;
-        right: 8px;
-        bottom: 6px;
-        font-size: clamp(14px, 4vw, 18px);
-        cursor: default;
+        right: 1.4vw;
+        bottom: 0.7vh;
+        font-size: 3.2vw;
+        color: rgb(255, 255, 255);
+        cursor: nwse-resize;
         z-index: 3;
         user-select: none;
         transform: scaleX(-1);
-        opacity: 0.7;
-        pointer-events: none;
     }
 
-    .corner {
-        color: rgb(255, 255, 255);
-    }
-
-    .cornerRender {
+    .bloc:nth-child(4) .corner,
+    .bloc:nth-child(5) .corner,
+    .bloc:nth-child(6) .corner {
         color: rgb(0, 0, 0);
     }
 
-    img {
-        -webkit-user-drag: none;
+    .bloc:nth-child(5) {
+        display: none;
+    }
+
+    .size {
+        position: absolute;
+        font-size: 3vw;
+        color: rgb(255, 255, 255);
+        z-index: 3;
         user-select: none;
     }
 
-    #consoleOutput {
+    #resize {
         position: absolute;
-        left: 4vw;
-        bottom: 2vh;
-        width: 92vw;
-        height: 22vh;
-        background: #111;
-        color: #ddd;
-        font-family: monospace;
-        font-size: clamp(11px, 3vw, 13px);
-        padding: 10px;
-        overflow-y: auto;
-        display: none;
-        z-index: 100;
-        box-sizing: border-box;
-        border-radius: 10px;
-        border: 1px solid #333;
+        border: 0;
+        background: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1vw;
+        cursor: pointer;
     }
 
-    .console-log {
-        color: #eee;
+    #close {
+        color: white;
+        border: 0;
+        background: none;
+        position: absolute;
+        cursor: pointer;
+        right: 1vw;
+        top: 50%;
+        font-size: 3.4vw;
+        transform: translateY(-50%);
     }
 
-    .console-warn {
-        color: orange;
-    }
-
-    .console-error {
+    #close:hover {
         color: red;
     }
 
-    /* Styles pour les overlays */
-    #templatesOverlay,
-    #modelOverlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: rgba(0,0,0,0.8);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 999999;
-    }
-
-    #templatesModal,
-    #modelModal {
-        position: relative;
-        background: #222020;
-        color: white;
-        font-family: "Fira Sans", sans-serif;
-        padding: 20px;
-        border-radius: 12px;
-        width: 90vw;
-        max-width: 400px;
-        min-height: 300px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 1rem;
-    }
-
-    #modelOptions {
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-        gap: 0.8rem;
-        width: 100%;
-    }
-
-    #modelOptions button {
-        width: 100%;
-        padding: 0.8rem 1rem;
-        background-color: #00a5a5;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        font-family: "Fira Sans", sans-serif;
-        font-size: 0.9rem;
-        font-weight: bold;
-    }
-
-    #modelModal .btnClose {
-        position: static;
-        width: auto;
-        padding: 0.6vh 1vw;
-        background-color: #e94a34;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-family: "Fira Sans", sans-serif;
-        font-weight: bold;
-    }
-
-    /* Styles pour les boutons learning */
-    #btnLearning {
-        display: flex;
-        flex-direction: column;
-        gap: 1vh;
-        padding: 1vh 1vw;
-        position: absolute;
-        top: 15vh;
-        left: 4vw;
-        width: 92vw;
-        background: rgba(0,0,0,0.1);
-        border-radius: 10px;
-        z-index: 25;
-    }
-
-    .buttonsCenter {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 2vw;
-        width: 100%;
-    }
-
-    .btnLayout,
-    .btnExercise {
-        position: static;
-        padding: 1vh 3vw;
-        border-radius: 5px;
-        border: none;
-        color: white;
-        font-weight: bold;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        font-size: clamp(12px, 3vw, 14px);
-    }
-
-    .btnLayout {
-        background-color: #00a5a5;
-    }
-
-    .btnExercise {
-        background-color: #fec800;
-    }
-
-    #layoutButtons,
-    #exerciseButtons,
-    #modelButtons {
-        display: flex;
-        flex-direction: column;
-        gap: 1vh;
-        margin-top: 1vh;
-        width: 100%;
-    }
-
-    #layoutButtons button,
-    #exerciseButtons button,
-    #modelButtons button {
-        padding: 0.5vh 2vw;
-        border-radius: 5px;
-        border: none;
-        color: white;
-        font-weight: bold;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        font-size: clamp(11px, 2.5vw, 13px);
-    }
-
-    #layoutButtons button {
-        background-color: #00a5a5;
-    }
-
-    #exerciseButtons button {
-        background-color: #fec800;
-    }
-
-    #modelButtons button {
-        background-color: #444;
-    }
-
-    #modelButtons .btnClose {
-        background-color: #e94a34;
-    }
-
-    /* Styles pour les blocs mini */
     .bloc.mini {
         overflow: hidden;
     }
@@ -1007,64 +841,312 @@ img {
         display: none;
     }
 
-    /* Styles hover pour mobile */
-    #btnLearning button:hover,
-    #modelButtons button:hover,
-    #modelOptions button:hover,
-    #modelModal .btnClose:hover,
-    .btnLayout:hover,
-    .btnExercise:hover {
-        transform: translateY(-1px) scale(1.02);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    }
-
-    /* Styles pour dropRender */
-    .dropRender {
+    #consoleOutput {
         position: absolute;
-        top: 0.4vh;
-        right: 0.2vw;
-        width: 10vw;
-        height: 2vh;
-        border-radius: 1vw;
-        background: rgba(255,255,255,0.25);
-        z-index: 20;
-        pointer-events: none;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 24vh;
+        background: #111;
+        color: #ddd;
+        font-family: monospace;
+        font-size: 2.8vw;
+        padding: 2vw;
+        overflow-y: auto;
         display: none;
+        z-index: 10;
+        box-sizing: border-box;
     }
 
-    /* Styles pour les boutons resize/close */
-    #resize,
-    #close {
-        position: absolute;
-        border: 0px;
-        background: none;
-        cursor: pointer;
-        font-size: clamp(12px, 3vw, 14px);
+    .console-log {
+        color: #eee;
     }
 
-    #resize {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0.5vw;
-        right: 2vw;
-        top: 50%;
-        transform: translateY(-50%);
+    .console-warn {
+        color: orange;
     }
 
-    #close {
-        color: white;
-        right: 0.5vw;
-        top: 50%;
-        transform: translateY(-50%);
-    }
-
-    #close:hover {
+    .console-error {
         color: red;
     }
 
-    .size {
-        font-size: clamp(12px, 3vw, 14px);
+    #btnConsole, #btnDownload, #btnLearn, #btnModel, #btnReload, #btnClear, .btnLayout, .btnClose, .btnExercise {
+        position: absolute;
+        z-index: 1000000;
+        border: none;
+        border-radius: 1.2vw;
+        color: white;
+        font-weight: bold;
+        font-family: "Fira Sans", sans-serif;
+        cursor: pointer;
+        box-shadow: 0 0.8vw 2vw rgba(0,0,0,0.2);
+        transition: all 0.25s ease;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #btnConsole,
+    #btnDownload,
+    #btnLearn,
+    #btnModel,
+    #btnReload,
+    #btnClear {
+        top: 7.2vh;
+        width: 13vw;
+        height: 3.8vh;
+        font-size: 2vw;
+        padding: 0;
+    }
+
+    #btnConsole {
+        left: 1vw;
+        background-color: gray;
+    }
+
+    #btnDownload {
+        left: 15vw;
+        background-color: gray;
+    }
+
+    #btnLearn {
+        left: 29vw;
+        background-color: gray;
+    }
+
+    #btnModel {
+        left: 43vw;
+        background-color: gray;
+    }
+
+    #btnReload {
+        left: 57vw;
+        background-color: gray;
+    }
+
+    #btnClear {
+        left: 71vw;
+        background-color: gray;
+    }
+
+    .buttonsCenter {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 3vw;
+        width: 100%;
+    }
+
+    .btnLayout {
+        position: static;
+        background-color: #00a5a5;
+        padding: 6vh 8vw;
+        font-size: 3vw;
+    }
+
+    .btnExercise {
+        position: static;
+        background-color: #fec800;
+        padding: 6vh 8vw;
+        font-size: 3vw;
+    }
+
+    #layoutButtons {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 80vw;
+    }
+
+    #layoutButtons button {
+        background-color: #00a5a5;
+        padding: 1vh 8vw;
+        color: white;
+        border: none;
+        border-radius: 1.2vw;
+        cursor: pointer;
+        font-family: "Fira Sans", sans-serif;
+        font-size: 3vw;
+        margin-bottom: 1.8vh;
+        width: 100%;
+    }
+
+    #layoutButtons .modelMenu {
+        background-color: #fec800;
+    }
+
+    #layoutButtons .modelBlock {
+        background-color: #e94a34;
+    }
+
+    #layoutButtons .modelLast {
+        background-color: gray;
+    }
+
+    #exerciseButtons {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 80vw;
+    }
+
+    #exerciseButtons button {
+        background-color: #00a5a5;
+        padding: 1vh 8vw;
+        color: white;
+        border: none;
+        border-radius: 1.2vw;
+        cursor: pointer;
+        font-family: "Fira Sans", sans-serif;
+        font-size: 3vw;
+        margin-bottom: 1.8vh;
+        width: 100%;
+    }
+
+    #exerciseButtons .exercise1 {
+        background-color: #00a5a5;
+    }
+
+    #exerciseButtons .exercise2 {
+        background-color: #fec800;
+    }
+
+    #exerciseButtons .exercise3 {
+        background-color: #e94a34;
+    }
+
+    #templatesOverlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100dvh;
+        background: rgba(0,0,0,0.6);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 999999999;
+    }
+
+    #modelOverlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100dvh;
+        background: rgba(0,0,0,0.6);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 999999999;
+    }
+
+    #templatesModal {
+        position: relative;
+        background: #222020;
+        color: black;
+        padding: 4vw;
+        border-radius: 2.5vw;
+        width: 86vw;
+        height: 34vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #templatesList {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #modelModal {
+        position: relative;
+        background: #222020;
+        color: white;
+        font-family: "Fira Sans", sans-serif;
+        padding: 5vw;
+        border-radius: 2.5vw;
+        width: 86vw;
+        min-height: 34vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    #modelOptions {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.8rem;
+        width: 100%;
+    }
+
+    #modelOptions button {
+        width: 100%;
+        padding: 1rem 1.2rem;
+        background-color: #00a5a5;
+        color: white;
+        border: none;
+        border-radius: 2vw;
+        cursor: pointer;
+        font-family: "Fira Sans", sans-serif;
+        font-size: 3vw;
+    }
+
+    #modelModal .btnClose {
+        position: static;
+        width: auto;
+        left: auto;
+        padding: 1vh 3vw;
+        background-color: #e94a34;
+        font-size: 3vw;
+    }
+
+    #templatesModal .btnLayout,
+    #templatesModal .btnExercise {
+        padding: 7vh 7vw;
+    }
+
+    #templatesModal .buttonsCenter {
+        width: auto;
+    }
+
+    .closeCenter {
+        position: absolute;
+        top: 88%;
+        left: 74%;
+    }
+
+    .btnClose {
+        background-color: #e94a34;
+        padding: 1vh 3vw;
+        font-size: 3vw;
+    }
+
+    #btnLearning {
+        display: none;
+    }
+
+    #menuButtons button:hover,
+    #btnLearning button:hover,
+    #modelButtons button:hover,
+    #modelOptions button:hover,
+    #modelModal .btnClose:hover {
+        transform: translateY(-2px) scale(1.03);
+        box-shadow: 0 8px 18px rgba(0,0,0,0.3);
+        background: linear-gradient(45deg, rgb(26, 26, 26), grey);
     }
 }
-
