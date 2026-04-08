@@ -1,4 +1,4 @@
-let newX = 0, newY = 0, startX = 0, startY = 0, activeBox = null, pane = null, renderTimeout = null; // variables globales pour gérer déplacement, resize et délai de rendu
+let newX = 0, newY = 0, startX = 0, startY = 0, offsetX = 0, offsetY = 0, activeBox = null, pane = null, renderTimeout = null; // variables globales pour gérer déplacement, resize et délai de rendu
 let currentDisposition = "default";
 
 const bars = document.querySelectorAll(".bar"); // récupère toutes les barres de drag
@@ -31,6 +31,8 @@ function mouseDown(e){
     const rect = activeBox.getBoundingClientRect();
     const parentRect = borders.getBoundingClientRect();
 
+    offsetX = e.clientX - rect.left;
+    offsetY = e.clientY - rect.top;
     currentTop = rect.top - parentRect.top;
     currentLeft = rect.left - parentRect.left;
 
@@ -48,12 +50,12 @@ function mouseDown(e){
         activeBox.style.height = "30vh";
         activeBox.dataset.snapped = "false";
 
-        // Centre le bloc sous la souris
-        const w = activeBox.offsetWidth;
-        const h = activeBox.offsetHeight;
+        // Replace le bloc sous le même point de saisie
         const parentRect = borders.getBoundingClientRect();
-        const newLeft = e.clientX - parentRect.left - w / 2;
-        activeBox.style.left = (newLeft / borders.clientWidth) * 100 + "%";
+        const newTop = e.clientY - parentRect.top - offsetY;
+        const newLeft = e.clientX - parentRect.left - offsetX;
+        activeBox.style.top = (Math.max(0, Math.min(newTop, borders.clientHeight - activeBox.offsetHeight)) / borders.clientHeight) * 100 + "%";
+        activeBox.style.left = (Math.max(menuBorder.offsetLeft + menuBorder.offsetWidth, Math.min(newLeft, borders.clientWidth - activeBox.offsetWidth)) / borders.clientWidth) * 100 + "%";
     }
 
     startX = e.clientX;
@@ -68,14 +70,14 @@ function mouseMove(e){
     const barHeight = activeBox.querySelector(".bar").offsetHeight;
 
     const newTop = Math.max(0, Math.min(
-        e.clientY - parentRect.top - barHeight / 2,
+        e.clientY - parentRect.top - offsetY,
         borders.clientHeight - activeBox.offsetHeight
     ));
 
     const newLeft = Math.max(
         menuBorder.offsetLeft + menuBorder.offsetWidth,
         Math.min(
-            e.clientX - parentRect.left - activeBox.offsetWidth / 2,
+            e.clientX - parentRect.left - offsetX,
             borders.clientWidth - activeBox.offsetWidth
         )
     );
@@ -162,6 +164,8 @@ function touchDown(e){
     const rect = activeBox.getBoundingClientRect();
     const parentRect = borders.getBoundingClientRect();
 
+    offsetX = e.touches[0].clientX - rect.left;
+    offsetY = e.touches[0].clientY - rect.top;
     currentTop = rect.top - parentRect.top;
     currentLeft = rect.left - parentRect.left;
 
@@ -200,14 +204,14 @@ function touchMove(e){
     const barHeight = activeBox.querySelector(".bar").offsetHeight;
 
     const newTop = Math.max(0, Math.min(
-        e.touches[0].clientY - parentRect.top - barHeight / 2,
+        e.touches[0].clientY - parentRect.top - offsetY,
         borders.clientHeight - activeBox.offsetHeight
     ));
 
     const newLeft = Math.max(
         menuBorder.offsetLeft + menuBorder.offsetWidth,
         Math.min(
-            e.touches[0].clientX - parentRect.left - activeBox.offsetWidth / 2,
+            e.touches[0].clientX - parentRect.left - offsetX,
             borders.clientWidth - activeBox.offsetWidth
         )
     );
