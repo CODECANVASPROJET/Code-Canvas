@@ -12,6 +12,7 @@ const blocCss = document.getElementById("windowCss").closest(".bloc");
 const blocJs = document.getElementById("windowJs").closest(".bloc");
 const blocRender = document.getElementById("windowRender").closest(".bloc");
 const blocModel = document.getElementById("windowModel").closest(".bloc");
+const blocExercise = document.getElementById("windowExercise").closest(".bloc");
 const dropRender = document.querySelector(".dropRender");
 
 bars.forEach(bar => { bar.addEventListener("mousedown", mouseDown) }); // active le drag sur chaque barre
@@ -364,6 +365,7 @@ function showExercise() {
 }
 
 function loadLayout(path) {
+    const dropRender = document.querySelector(".dropRender");
     const frame = document.getElementById("windowModel");
 
     if (frame) {
@@ -371,43 +373,69 @@ function loadLayout(path) {
     }
 
     blocModel.style.display = "block";
+    dropRender.style.display = "block";
+    closeWindow();
+}
+
+function loadExercise(path) {
+    const frame = document.getElementById("windowExercise");
+
+    if (frame) {
+        frame.src = path;
+    }
+
+    blocExercise.style.display = "block";
     closeWindow();
 }
 
 function modelDispositions(){
-    if (document.getElementById("modelOverlay")) return;
+    const existingOverlay = document.getElementById("modelOverlay");
+    if (existingOverlay) {
+        existingOverlay.remove();
+        return;
+    }
+
+    const modelButtons = document.getElementById("modelButtons");
+    if (!modelButtons) return;
 
     const overlay = document.createElement("div");
     overlay.id = "modelOverlay";
     overlay.innerHTML = `
         <div id="modelModal">
             <h2>Choix de disposition</h2>
-            <div id="modelOptions">
-                <button class="modelOption" data-layout="default">Disposition par défaut</button>
-                <button class="modelOption" data-layout="grid">Grille 2x2</button>
-                <button class="modelOption" data-layout="top-row">Code en haut / rendu en bas</button>
-                <button class="modelOption" data-layout="code-left">Code à gauche / rendu à droite</button>
-            </div>
-            <button class="btnClose" onclick="closeWindow()">FERMER</button>
+            <div id="modelOptions"></div>
+            <button class="btnClose">FERMER</button>
         </div>
     `;
 
-    document.body.appendChild(overlay);
-    overlay.querySelectorAll(".modelOption").forEach(button => {
-        button.addEventListener("click", () => {
-            const layout = button.dataset.layout;
-            if (layout === "grid") {
-                applyDispositionGrid();
-            } else if (layout === "top-row") {
-                applyDispositionTopRow();
-            } else if (layout === "code-left") {
-                applyDispositionCodeLeft();
-            } else {
-                applyDispositionDefault();
-            }
-            closeWindow();
+    const closeButton = overlay.querySelector(".btnClose");
+    if (closeButton) {
+        closeButton.addEventListener("click", closeWindow);
+    }
+
+    const options = overlay.querySelector("#modelOptions");
+    if (options) {
+        const templateButtons = modelButtons.querySelectorAll(".modelOption");
+        templateButtons.forEach(button => {
+            const clone = button.cloneNode(true);
+            clone.removeAttribute("onclick");
+            clone.addEventListener("click", () => {
+                const layout = clone.dataset.layout;
+                if (layout === "grid") {
+                    applyDispositionGrid();
+                } else if (layout === "top-row") {
+                    applyDispositionTopRow();
+                } else if (layout === "code-left") {
+                    applyDispositionCodeLeft();
+                } else {
+                    applyDispositionDefault();
+                }
+            });
+            options.appendChild(clone);
         });
-    });
+    }
+
+    document.body.appendChild(overlay);
 }
 
 function setBlocStyles(bloc, left, top, width, height) {
@@ -450,10 +478,16 @@ function applyDispositionCodeLeft() {
 }
 
 function closeWindow() {
+    const dropRender = document.querySelector(".dropRender");
     const templatesOverlay = document.getElementById("templatesOverlay");
     const modelOverlay = document.getElementById("modelOverlay");
     if (templatesOverlay) templatesOverlay.remove();
     if (modelOverlay) modelOverlay.remove();
+}
+
+function closeModelButtons() {
+    const modelButtons = document.getElementById("modelButtons");
+    if (modelButtons) modelButtons.style.display = "none";
 }
 
 // BOUTON RAFRAICHIR LES POSITIONS PAS DEFAUT
@@ -498,10 +532,16 @@ function toggleMini(button) {
 
         bloc.style.position = "absolute";
         bloc.style.top = "97vh";
-        bloc.style.left = "91vw";
         bloc.style.width = "8vw";
         bloc.style.height = "3vh";
         bloc.style.zIndex = 999999999;
+
+        // Position différente pour l'exercice (plus à gauche)
+        if (bloc === blocExercise) {
+            bloc.style.left = "83vw";
+        } else {
+            bloc.style.left = "91vw";
+        }
     } else {
         bloc.classList.remove("mini");
         iframe.style.display = "";
@@ -530,8 +570,10 @@ function isMouseInElement(mouseX, mouseY, element) {
 // FERMER LA FENETE MODELE
 
 function closeModel(button) {
+    const dropRender = document.querySelector(".dropRender");
     const bloc = button.closest(".bloc");
 
     bloc.style.display = "none";
+    dropRender.style.display = "none";
 }
 

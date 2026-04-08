@@ -1,0 +1,149 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: white;
+    font-family: Arial, sans-serif;
+}
+
+/* container principal */
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 6vh;
+}
+
+/* titre */
+.title {
+    font-size: 7vw;
+    font-weight: bold;
+}
+
+/* liste */
+.steps {
+    display: flex;
+    flex-direction: column;
+    gap: 4vh;
+}
+
+/* étape */
+.step {
+    display: flex;
+    align-items: center;
+    gap: 3vw;
+    font-size: 3.5vw;
+    cursor: pointer;
+}
+
+/* checkbox custom */
+.step input {
+    display: none;
+}
+
+.custom-checkbox {
+    width: 3.5vw;
+    height: 3.5vw;
+    border: 0.25vw solid black;
+    border-radius: 0.6vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* check animation */
+.step input:checked + .custom-checkbox {
+    background: rgb(255, 255, 255);
+}
+
+.step input:checked + .custom-checkbox::after {
+    content: "✓";
+    color: white;
+    font-size: 2.5vw;
+}
+
+/* texte barré quand validé */
+.step input:checked + .custom-checkbox::after {
+    content: "✓";
+    color: #00c853; /* vert */
+    font-size: 2.5vw;
+}
+
+.timer {
+    position: absolute;
+    top: 3vh;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    font-size: 6vw;
+    font-weight: bold;
+
+    background: black;
+    color: white;
+
+    padding: 1vh 3vw;
+    border-radius: 1vw;
+
+    box-shadow: 0 0 2vw rgba(0,0,0,0.3);
+
+    z-index: 10;
+}
+
+.result {
+    font-size: 3vw;
+    font-weight: bold;
+    color: red;
+}
+
+.success .step input:checked + .custom-checkbox {
+    background: #00c853;
+    border-color: #00c853;
+}
+
+.success .step input:checked ~ span {
+    color: #00c853;
+    text-decoration: line-through;
+    opacity: 1;
+}
+
+.success .step input:checked + .custom-checkbox::after {
+    content: "✓";
+    color: white;
+    font-size: 2.5vw;
+}
+
+.failed .step input:not(:checked) + .custom-checkbox {
+    background: red;
+    border-color: red;
+}
+
+.failed .step input:not(:checked) + .custom-checkbox::after {
+    content: "✕";
+    color: white;
+    font-size: 2.5vw;
+}
+
+.failed .step input:not(:checked) ~ span {
+    color: red;
+    text-decoration: line-through;
+    opacity: 1;
+}
+
+.failed .step input:checked + .custom-checkbox {
+    background: #00c853;
+    border-color: #00c853;
+}
+
+.failed .step input:checked + .custom-checkbox::after {
+    content: "✓";
+    color: white;
+    font-size: 2.5vw;
+}
+
+.failed .step input:checked ~ span {
+    color: #00c853;
+    text-decoration: line-through;
+    opacity: 1;
+}

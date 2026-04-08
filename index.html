@@ -92,8 +92,25 @@
                 <button id="close" onclick="closeModel(this)">x</button>
             </div>
             <iframe
-                id="windowModel"s
-                src="./learn/layout/layout1.html">
+                id="windowModel"
+                src="./learn/learn/layout/layout1.html">
+            </iframe>
+        </div>
+
+        <div class="bloc">
+            <span class="corner material-symbols-outlined">open_in_full</span>
+            <div class="bar">
+                <div class="texte">
+                    <p>Exercice</p>
+                </div>
+                <button id="resize" onclick="toggleMini(this)">
+                    <span class="size material-symbols-outlined">picture_in_picture_alt</span>
+                </button>
+                <button id="close" onclick="closeModel(this)">x</button>
+            </div>
+            <iframe
+                id="windowExercise"
+                src="./learn/exercise/exercise1.html">
             </iframe>
         </div>
     </div>
@@ -118,20 +135,27 @@
                 <button class ="modelMenu" onclick="loadLayout('./learn/layout/layout2.html')">MODELE MENU</button>
                 <button class ="modelBlock" onclick="loadLayout('./learn/layout/layout3.html')">MODELE BLOC</button>
                 <button class ="modelLast" onclick="loadLayout('./learn/layout/layout4.html')">MODELE Last</button>
-        
             </div>
 
             <button class="btnExercise" onclick="showExercise()">EXERCICES</button>
 
             <div id="exerciseButtons" style="display: none;">
-                <button class ="exercise1" onclick="loadLayout('./learn/exercise/exercise1.html')">Exercice Grille (grid)</button>
-                <button class ="exercise2" onclick="loadLayout('./learn/exercise/exercise2.html')">Exercice Menu (déroulant)</button>
-                <button class ="exercise3" onclick="loadLayout('./learn/exercise/exercise3.html')">Exercice Bouton (hover)</button>
+                <button class ="exercise1" onclick="loadExercise('./learn/exercise/exercise1.html')">Exercice Grille (grid)</button>
+                <button class ="exercise2" onclick="loadExercise('./learn/exercise/exercise2.html')">Exercice Menu (déroulant)</button>
+                <button class ="exercise3" onclick="loadExercise('./learn/exercise/exercise3.html')">Exercice Bouton (hover)</button>
             </div>
 
             <div class="closeCenter">
                 <button class="btnClose" onclick="closeWindow()">FERMER</button>
             </div>
+        </div>
+
+        <div id="modelButtons" style="display: none;">
+            <button class="modelOption" data-layout="default">Disposition par défaut</button>
+            <button class="modelOption" data-layout="grid">Grille 2x2</button>
+            <button class="modelOption" data-layout="top-row">Code en haut / rendu en bas</button>
+            <button class="modelOption" data-layout="code-left">Code à gauche / rendu à droite</button>
+            <button class="btnClose" onclick="closeModelButtons()">FERMER</button>
         </div>
     </div>
     

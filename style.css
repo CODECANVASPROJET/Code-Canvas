@@ -140,6 +140,7 @@ img {
     background: rgba(255,255,255,0.25);
     z-index: 20;
     pointer-events: none;
+    display: none;
 }
 
 
@@ -165,11 +166,19 @@ img {
     height: 93.9vh; /* hauteur presque pleine */
 }
 
-.bloc:nth-child(5) { /* Rendu */
+.bloc:nth-child(5) { /* Modèle */
     top: 7.9vh; /* position verticale */
     left: 59vw; /* position horizontale */
     width: 15vw; /* largeur spécifique */
     height: 30vh; /* hauteur presque pleine */
+}
+
+.bloc:nth-child(6) { /* Exercice */
+    top: 7.9vh; /* position verticale */
+    left: 59vw; /* position horizontale */
+    width: 15vw; /* largeur spécifique */
+    height: 30vh; /* hauteur presque pleine */
+    display: none;
 }
 
 .texte { /* titre des fenêtres (HTML, CSS, JS) */
@@ -197,7 +206,7 @@ img {
     transform: scaleX(-1);
 }
 
-.bloc:nth-child(4) .corner, .bloc:nth-child(5) .corner {
+.bloc:nth-child(4) .corner, .bloc:nth-child(5) .corner, .bloc:nth-child(6) .corner {
     color: rgb(0, 0, 0);
 }
 
@@ -335,17 +344,6 @@ img {
 #btnClear {
     top: 56.5vh;
     background-color: gray;
-}
-
-#menuButtons button:hover {
-    transform: translateY(-2px) scale(1.03);
-    box-shadow: 0 8px 18px rgba(0,0,0,0.3);
-    background: linear-gradient(45deg, rgb(26, 26, 26), grey);
-}
-
-#btnLearning button:hover {
-    transform: translateY(-2px) scale(1.03);
-    box-shadow: 0 8px 18px rgba(0,0,0,0.3);
 }
 
 .buttonsCenter {
@@ -548,6 +546,16 @@ img {
 
 #btnLearning {
     display: none;  
+}
+
+#menuButtons button:hover,
+#btnLearning button:hover,
+#modelButtons button:hover,
+#modelOptions button:hover,
+#modelModal .btnClose:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.3);
+    background: linear-gradient(45deg, rgb(26, 26, 26), grey);
 }
 
 /* ADAPTATION AU FORMAT TÉLÉPHONE */
