@@ -434,6 +434,7 @@ function modelDispositions(){
                 } else {
                     applyDispositionDefault();
                 }
+                closeWindow();
             });
             options.appendChild(clone);
         });
@@ -492,6 +493,11 @@ function closeWindow() {
 function closeModelButtons() {
     const modelButtons = document.getElementById("modelButtons");
     if (modelButtons) modelButtons.style.display = "none";
+}
+
+function closeModel(button) {
+    const bloc = button.closest(".bloc");
+    bloc.style.display = "none";
 }
 
 // BOUTON RAFRAICHIR LES POSITIONS PAS DEFAUT
